@@ -24,7 +24,7 @@ jobs:
         port: 22
         script: |
           echo "truy cập vào đường dẫn file server"
-          cd /var/www/blade_travel_server
+          cd /var/www/blade_travel_server/
           echo "pull dữ liệu mới trên github"
           git pull
           git status
