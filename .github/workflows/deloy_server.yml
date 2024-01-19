@@ -24,7 +24,7 @@ jobs:
         port: 22
         script: |
           echo "truy cập vào đường dẫn file server"
-          cd /var/www/blade_travel_server/
+          cd /var/www/blade_travel_server
           echo "pull dữ liệu mới trên github"
           git pull
           git status
@@ -38,4 +38,4 @@ jobs:
           echo "reset SWAP"
           sudo swapoff -a; sudo swapon -a
           echo "Gửi thông báo"
-          curl -X POST -H "Content-Type: application/json" -H "Authorization:${{ secrets.DISCORD_AUTHORIZATION }}" -d '{"content":"Dự án server VIP đã deploy thành công link: https://api.myblade.io.vn/api/v1 "}' ${{ secrets.DISCORD_NOTIFY_URL }}
+          curl -X POST -H "Content-Type: application/json" -H "Authorization:${{ secrets.DISCORD_AUTHORIZATION }}" -d '{"content":"Dự án node js đã deploy thành công link: https://travel.myblade.io.vn/ "}' ${{ secrets.DISCORD_NOTIFY_URL }}
