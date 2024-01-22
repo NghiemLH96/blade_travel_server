@@ -1,7 +1,7 @@
-import { Body, Controller, Ip, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Ip, Post, Req, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { UsersService } from './users.service';
 import createUserDto from './dto/create_user.dto';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { writeFileSync } from 'fs';
 
@@ -32,9 +32,11 @@ export class UsersController {
   }
 
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
-  async createNewUser(@Ip() ip:string ,@Body() newUserDetail:createUserDto , @Res() res: Response) {
+  async createNewUser(@Req() req:Request ,@Ip() ip:string ,@Body() newUserDetail:createUserDto , @Res() res: Response) {
     try {
+      let realIp = req.headers['x-forwarded-for']
+      console.log(realIp);
+      
       let currentIp = ip.split(":")[3]
       let { message, error } = await this.usersService.createNewUser({...newUserDetail,ip:currentIp});
       if (error) {
