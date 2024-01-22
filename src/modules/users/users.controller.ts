@@ -1,16 +1,30 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Ip, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { UsersService } from './users.service';
 import createUserDto from './dto/create_user.dto';
 import { Response } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { writeFileSync } from 'fs';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
-  @Post()
-  async createNewUser(@Body() newUserDetail: createUserDto, @Res() res: Response) {
+  @Post('upload-avatar')
+  @UseInterceptors(FileInterceptor('avatar'))
+  async uploadFile(@Body() userId:number ,@UploadedFile() file: Express.Multer.File) {
     try {
-      let { message, error } = await this.usersService.createNewUser(newUserDetail);
+      //let { message, error } = await this.usersService.uploadAvatar({...newUserDetail,ip});
+    } catch (error) {
+      
+    }
+  }
+
+  @Post()
+  @UseInterceptors(FileInterceptor('file'))
+  async createNewUser(@Ip() ip:string ,@Body() newUserDetail:createUserDto , @Res() res: Response) {
+    try {
+      let currentIp = ip.split(":")[3]
+      let { message, error } = await this.usersService.createNewUser({...newUserDetail,ip:currentIp});
       if (error) {
         throw error
       }
