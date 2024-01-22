@@ -34,11 +34,10 @@ export class UsersController {
   @Post()
   async createNewUser(@Req() req:Request ,@Ip() ip:string ,@Body() newUserDetail:createUserDto , @Res() res: Response) {
     try {
-      let realIp = req.headers['x-forwarded-for']
-      console.log(realIp);
+      let realIp = req.headers['x-forwarded-for'].toString().split(",")[0]
       
       let currentIp = ip.split(":")[3]
-      let { message, error } = await this.usersService.createNewUser({...newUserDetail,ip:currentIp});
+      let { message, error } = await this.usersService.createNewUser({...newUserDetail,ip:realIp});
       if (error) {
         throw error
       }
