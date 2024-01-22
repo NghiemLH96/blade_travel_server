@@ -58,9 +58,18 @@ export class UsersService {
         }
     }
 
-    async uploadAvatar( userId:number , fileName:string ){
+    async uploadAvatar( updateData:{id:string, avatar:string} ){
         try {
-            
+            console.log(updateData);
+            /*let updateResult = await this.prisma.users.update({
+                where:{
+                    id:updateData.id
+                }
+            })*/
+            return {
+                message:"",
+                error:""
+            }
         } catch (error) {
             
         }

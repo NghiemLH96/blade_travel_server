@@ -11,11 +11,23 @@ export class UsersController {
 
   @Post('upload-avatar')
   @UseInterceptors(FileInterceptor('avatar'))
-  async uploadFile(@Body() userId:number ,@UploadedFile() file: Express.Multer.File) {
+  async uploadFile(@Body() body:any ,@UploadedFile() file: Express.Multer.File , @Res() res:Response) {
     try {
-      //let { message, error } = await this.usersService.uploadAvatar({...newUserDetail,ip});
+      let fileName = `avatar_${body.userId}.${file.mimetype.split("/")[1]}`
+      writeFileSync(`public/imgs/avatars/` + fileName,file.buffer)
+      let updateData = {
+        id :body.userId,
+        avatar:fileName
+      }
+      let { message , error } = await this.usersService.uploadAvatar(updateData)
+      return res.status(200).json({
+        message:"upload-avatar successed"
+      })
     } catch (error) {
-      
+      return res.status(200).json({
+        message:"upload-avatar failed",
+        error
+      })
     }
   }
 

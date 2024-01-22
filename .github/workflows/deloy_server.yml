@@ -31,8 +31,16 @@ jobs:
           echo "kích hoạt kiểm tra nvm"
           . $HOME/.nvm/nvm.sh
           nvm use
+          echo "tạo env và upload secret"
+          cp .env.example .env
+          sed -i 's/DB_USER/${{ secrets.DB_USER }}/g' .env
+          sed -i 's/DB_PW/${{ secrets.DB_PW }}/g' .env
+          sed -i 's/DB_HOST/${{ secrets.LINUX_UBUNTU_SERVER_IP }}/g' .env
+          sed -i 's/DB_NAME/${{ secrets.DB_NAME }}/g' .env
           echo "cài đặt lại node module"
           npm ci
+          echo "tạo prisma client cho node modules"
+          npx prisma generate
           echo "build dự án"
           npm run build
           echo "reset SWAP"

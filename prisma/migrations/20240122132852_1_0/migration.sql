@@ -9,7 +9,7 @@ CREATE TABLE `users` (
     `createAt` VARCHAR(191) NOT NULL,
     `updateAt` VARCHAR(191) NOT NULL,
     `phone` VARCHAR(191) NOT NULL,
-    `avatar` LONGTEXT NOT NULL,
+    `avatar` LONGTEXT NULL,
 
     UNIQUE INDEX `users_email_key`(`email`),
     UNIQUE INDEX `users_phone_key`(`phone`),
@@ -22,6 +22,7 @@ CREATE TABLE `user_IPs` (
     `ip` VARCHAR(191) NOT NULL,
     `userID` INTEGER NOT NULL,
 
+    INDEX `user_IPs_userID_fkey`(`userID`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
