@@ -4,6 +4,7 @@ import createUserDto from './dto/create_user.dto';
 import { Request, Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { writeFileSync } from 'fs';
+import checkExistUserDto from './dto/checkExist_uset.dto';
 
 @Controller('users')
 export class UsersController {
@@ -30,17 +31,22 @@ export class UsersController {
       })
     }
   }
-
+  //processing
   @Post()
-  async createNewUser(@Req() req:Request ,@Ip() ip:string ,@Body() newUserDetail:createUserDto , @Res() res: Response) {
+  async createNewUser(@Req() req:Request ,@Ip() ip:string ,@Body() newUserDetail:any , @Res() res: Response) {
+    console.log("newUserDetail",newUserDetail.data);
+    console.log("header", req.headers);
+    
     try {
-      let realIp = req.headers['x-forwarded-for'].toString().split(",")[0]
-      let { message, error } = await this.usersService.createNewUser({...newUserDetail,ip:realIp});
+      //let realIp = req.headers['x-forwarded-for'].toString().split(",")[0]
+      let data = JSON.parse(newUserDetail)
+      let { message, error } = await this.usersService.createNewUser({...newUserDetail,ip:"127.0.0.1"});
       if (error) {
         throw error
       }
       return res.status(200).json({ message })
     } catch (error) {
+      console.log(error);
       if (error.code == "P2002") {
         if (error.meta.target == "users_email_key") {
           return res.status(413).json({
@@ -59,32 +65,33 @@ export class UsersController {
       })
     }
   }
+
   //Register 1st step
   @Post("check-exist")
-  async check_exist(@Body() check_Exist: { email: string, phone: string }, @Res() res: Response) {
+  async check_exist(@Body() check_Exist: checkExistUserDto, @Res() res: Response) {
     try {
-      let { data, error } = await this.usersService.check_Exist_Fn(check_Exist)
+      let { message, data, error } = await this.usersService.check_Exist_Fn(check_Exist)
+
+      if(error){
+        throw error
+      }
+
       if (data) {
-        if (data.email == check_Exist.email) {
+        if (data) {
           return res.status(213).json({
-            message: "Email đã tồn tại!",
+            message,
+            data
           })
-        }
-        if (data.phone == check_Exist.phone) {
-          return res.status(213).json({
-            message: "Số điện thoại đã được đăng ký",
-          })
-        }else{
-          throw {
-            message:"Lỗi mất tiêu rồi",
-          }
         }
       }else{
         return res.status(200).json({
-          message:"Thông tin không trùng , có thể sử dụng.",
+          message,
+          data
         })
       }
     } catch (error) {
+      console.log(error);
+      
       return res.status(500).json({
         message:"Lỗi gì đó!",
         error

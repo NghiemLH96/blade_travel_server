@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import PrismaService from '../prisma/prisma.service';
 import createUserDto from './dto/create_user.dto';
+import checkExistUserDto from './dto/checkExist_uset.dto';
 
 @Injectable()
 export class UsersService {
@@ -33,28 +34,40 @@ export class UsersService {
         }
     }
 
-    async check_Exist_Fn(check_Exist:{email:string , phone:string}){
+    async check_Exist_Fn(check_Exist:checkExistUserDto){
         try {
-            let checkEmail = await this.prisma.users.findUnique({
+            let checkExist = await this.prisma.users.findFirst({
                 where:{
-                    email:check_Exist.email
-                }
-            })
-            if (checkEmail) {
-                return {data : checkEmail}
-            }else{
-                let checkPhone = await this.prisma.users.findUnique({
-                    where:{
-                        phone:check_Exist.phone
+                    OR:[
+                        {email: check_Exist.email},
+                        {phone: check_Exist.phone}
+                    ]
+                },
+            });
+            if (checkExist) {
+                if(checkExist.email == check_Exist.email){
+                    return {
+                        message:"email đã tồn tại!",
+                        data:checkExist
                     }
-                })
-                if (checkPhone) {
-                    return {data : checkPhone}
+                }
+    
+                if(checkExist.phone == check_Exist.phone){
+                    return {
+                        message:"số điện thoại đã được đăng ký!",
+                        data:checkExist
+                    }
+                }
+            }else{
+                return {
+                    message:"Thông tin không trùng , có thể sử dụng.",
+                    data:checkExist
                 }
             }
-            return {data:null}
         } catch (error) {
-            return error
+            console.log(error);
+            
+            return {error}
         }
     }
 
