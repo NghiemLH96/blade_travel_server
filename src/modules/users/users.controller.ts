@@ -33,13 +33,14 @@ export class UsersController {
   }
   //processing
   @Post()
-  async createNewUser(@Req() req:Request ,@Ip() ip:string ,@Body() newUserDetail:any , @Res() res: Response) {
-    console.log("newUserDetail",newUserDetail.data);
+  @UseInterceptors(FileInterceptor('avatar'))
+  async createNewUser(@UploadedFile() file: Express.Multer.File ,@Req() req:Request ,@Ip() ip:string ,@Body() body:any , @Res() res: Response) {
+    console.log("newUserDetail",body);
     console.log("header", req.headers);
     
     try {
       //let realIp = req.headers['x-forwarded-for'].toString().split(",")[0]
-      let data = JSON.parse(newUserDetail)
+      let newUserDetail = JSON.parse(body.data)
       let { message, error } = await this.usersService.createNewUser({...newUserDetail,ip:"127.0.0.1"});
       if (error) {
         throw error
@@ -49,12 +50,12 @@ export class UsersController {
       console.log(error);
       if (error.code == "P2002") {
         if (error.meta.target == "users_email_key") {
-          return res.status(413).json({
+          return res.status(213).json({
             message: "Email đã tồn tại!",
           })
         }
         if (error.meta.target == "users_phone_key") {
-          return res.status(413).json({
+          return res.status(213).json({
             message: "Số điện thoại đã được đăng ký, xin vui lòng sử dụng số khác!",
           })
         }

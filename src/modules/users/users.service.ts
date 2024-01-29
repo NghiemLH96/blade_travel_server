@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import PrismaService from '../prisma/prisma.service';
 import createUserDto from './dto/create_user.dto';
 import checkExistUserDto from './dto/checkExist_uset.dto';
+import { hashSync } from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -11,7 +12,7 @@ export class UsersService {
             let createResult = await this.prisma.users.create({
                 data:{
                     email:newUserDetail.email,
-                    password:newUserDetail.password,
+                    password:hashSync(newUserDetail.password,5),
                     phone:newUserDetail.phone,
                     createAt:String(Date.now()),
                     updateAt:String(Date.now()),
