@@ -35,19 +35,16 @@ export class UsersController {
   @Post()
   @UseInterceptors(FileInterceptor('avatar'))
   async createNewUser(@UploadedFile() file: Express.Multer.File ,@Req() req:Request ,@Ip() ip:string ,@Body() body:any , @Res() res: Response) {
-    console.log("newUserDetail",body);
-    console.log("header", req.headers);
-    
     try {
-      //let realIp = req.headers['x-forwarded-for'].toString().split(",")[0]
       let newUserDetail = JSON.parse(body.data)
+      file &&  writeFileSync(`public/imgs/avatars/avatar_${newUserDetail.phone}.${file.mimetype.split("/")[1]}`,file.buffer);
+      //let realIp = req.headers['x-forwarded-for'].toString().split(",")[0]
       let { message, error } = await this.usersService.createNewUser({...newUserDetail,ip:"127.0.0.1"});
       if (error) {
         throw error
       }
       return res.status(200).json({ message })
     } catch (error) {
-      console.log(error);
       if (error.code == "P2002") {
         if (error.meta.target == "users_email_key") {
           return res.status(213).json({

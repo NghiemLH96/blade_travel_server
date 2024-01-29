@@ -30,6 +30,7 @@
     "bcrypt-ts": "^5.0.1",
     "cors": "^2.8.5",
     "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.8",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1"
   },
