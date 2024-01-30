@@ -37,6 +37,10 @@ jobs:
           sed -i 's/DB_PW/${{ secrets.DB_PW }}/g' .env
           sed -i 's/DB_HOST/${{ secrets.LINUX_UBUNTU_SERVER_IP }}/g' .env
           sed -i 's/DB_NAME/${{ secrets.DB_NAME }}/g' .env
+          sed -i 's/API_HOST/${{ secrets.API_HOST }}/g' .env
+          sed -i 's/MAILER_ACC/${{ secrets.MAILER_ACC }}/g' .env
+          sed -i 's/MAILER_PASS/${{ secrets.MAILER_PASS }}/g' .env
+          sed -i 's/HASH_KEY/${{ secrets.HASH_KEY }}/g' .env
           echo "cài đặt lại node module"
           npm ci
           echo "tạo prisma client cho node modules"

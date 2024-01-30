@@ -28,7 +28,8 @@ export class UsersService {
                 })
             }
             return {
-                message:"Đăng ký thành công"
+                message:"Đăng ký thành công",
+                data: createResult
             }
         } catch (error) {
             return {error}
@@ -90,6 +91,22 @@ export class UsersService {
             return {
                 error
             }
+        }
+    }
+
+    async confirmEmail(userEmail:string):Promise<boolean>{
+        try {
+            await this.prisma.users.update({
+                where:{
+                    email:userEmail
+                },
+                data:{
+                    email_verify:true
+                }
+            })
+            return true
+        } catch (error) {
+            return false
         }
     }
 }

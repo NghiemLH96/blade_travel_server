@@ -1,14 +1,15 @@
-import { Body, Controller, Ip, Post, Req, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Ip, Post , Get , Req, Res, UploadedFile, UseInterceptors, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
-import createUserDto from './dto/create_user.dto';
 import { Request, Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { writeFileSync } from 'fs';
 import checkExistUserDto from './dto/checkExist_uset.dto';
+import { mailService , emailTemplates} from '../mailer/mailer.service';
+import { tokenService } from 'src/utils/token/token.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(private readonly usersService: UsersService, private mailerSevice:mailService , private tokenServ:tokenService) { }
 
   @Post('upload-avatar')
   @UseInterceptors(FileInterceptor('avatar'))
@@ -31,7 +32,7 @@ export class UsersController {
       })
     }
   }
-  //processing
+  //Register 2nd step
   @Post()
   @UseInterceptors(FileInterceptor('avatar'))
   async createNewUser(@UploadedFile() file: Express.Multer.File ,@Req() req:Request ,@Ip() ip:string ,@Body() body:any , @Res() res: Response) {
@@ -39,10 +40,12 @@ export class UsersController {
       let newUserDetail = JSON.parse(body.data)
       file &&  writeFileSync(`public/imgs/avatars/avatar_${newUserDetail.phone}.${file.mimetype.split("/")[1]}`,file.buffer);
       //let realIp = req.headers['x-forwarded-for'].toString().split(",")[0]
-      let { message, error } = await this.usersService.createNewUser({...newUserDetail,ip:"127.0.0.1"});
+      let { message, error , data } = await this.usersService.createNewUser({...newUserDetail,ip:"127.0.0.1"});
       if (error) {
         throw error
       }
+      
+      this.mailerSevice.sendMail(newUserDetail.email,"Xác nhận Email",emailTemplates.emailVerify(newUserDetail.email,`http://${process.env.HOST_API}/api/v1/users/email-confirm/${this.tokenServ.createToken(data,"3d")}}`))
       return res.status(200).json({ message })
     } catch (error) {
       if (error.code == "P2002") {
@@ -62,6 +65,24 @@ export class UsersController {
         error
       })
     }
+  }
+
+  //Verify Email
+  @Get("email-confirm/:token")
+  async verifyEmail(@Param("token") param:string){
+    try {
+      let userDetail:any = this.tokenServ.verify(param)
+      let result:boolean = await this.usersService.confirmEmail(userDetail.email)
+      if (result) {
+        console.log("xac minh thanh cong");
+      }else{
+        throw result
+      }
+    } catch (error) {
+        console.log(error);
+        
+    }
+    
   }
 
   //Register 1st step
