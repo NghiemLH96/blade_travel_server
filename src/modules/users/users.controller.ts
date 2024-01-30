@@ -61,7 +61,7 @@ export class UsersController {
         }
       }
       return res.status(500).json({
-        message: "Lỗi gì đó",
+        message: "Lỗi gì đó r",
         error
       })
     }
