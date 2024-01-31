@@ -1,33 +1,34 @@
-import { Body, Controller, Ip, Post , Get , Req, Res, UploadedFile, UseInterceptors, Param } from '@nestjs/common';
+import { Body, Controller, Ip, Post, Get, Req, Res, UploadedFile, UseInterceptors, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Request, Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { writeFileSync } from 'fs';
 import checkExistUserDto from './dto/checkExist_uset.dto';
-import { mailService , emailTemplates} from '../mailer/mailer.service';
+import { mailService, emailTemplates } from '../mailer/mailer.service';
 import { tokenService } from 'src/utils/token/token.service';
+import { loginUserDto } from './dto/login_user.dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService, private mailerSevice:mailService , private tokenServ:tokenService) { }
+  constructor(private readonly usersService: UsersService, private mailerSevice: mailService, private tokenServ: tokenService) { }
 
   @Post('upload-avatar')
   @UseInterceptors(FileInterceptor('avatar'))
-  async uploadFile(@Body() body:any ,@UploadedFile() file: Express.Multer.File , @Res() res:Response) {
+  async uploadFile(@Body() body: any, @UploadedFile() file: Express.Multer.File, @Res() res: Response) {
     try {
       let fileName = `avatar_${body.userId}.${file.mimetype.split("/")[1]}`
-      writeFileSync(`public/imgs/avatars/` + fileName,file.buffer)
+      writeFileSync(`public/imgs/avatars/` + fileName, file.buffer)
       let updateData = {
-        id :body.userId,
-        avatar:fileName
+        id: body.userId,
+        avatar: fileName
       }
-      let { message , error } = await this.usersService.uploadAvatar(updateData)
+      let { message, error } = await this.usersService.uploadAvatar(updateData)
       return res.status(200).json({
-        message:"upload-avatar successed"
+        message: "upload-avatar successed"
       })
     } catch (error) {
       return res.status(200).json({
-        message:"upload-avatar failed",
+        message: "upload-avatar failed",
         error
       })
     }
@@ -35,17 +36,17 @@ export class UsersController {
   //Register 2nd step
   @Post()
   @UseInterceptors(FileInterceptor('avatar'))
-  async createNewUser(@UploadedFile() file: Express.Multer.File ,@Req() req:Request ,@Ip() ip:string ,@Body() body:any , @Res() res: Response) {
+  async createNewUser(@UploadedFile() file: Express.Multer.File, @Req() req: Request, @Ip() ip: string, @Body() body: any, @Res() res: Response) {
     try {
       let newUserDetail = JSON.parse(body.data)
-      file &&  writeFileSync(`public/imgs/avatars/avatar_${newUserDetail.phone}.${file.mimetype.split("/")[1]}`,file.buffer);
+      file && writeFileSync(`public/imgs/avatars/avatar_${newUserDetail.phone}.${file.mimetype.split("/")[1]}`, file.buffer);
       //let realIp = req.headers['x-forwarded-for'].toString().split(",")[0]
-      let { message, error , data } = await this.usersService.createNewUser({...newUserDetail,ip:"127.0.0.1"});
+      let { message, error, data } = await this.usersService.createNewUser({ ...newUserDetail, ip: "127.0.0.1" });
       if (error) {
         throw error
       }
-      
-      this.mailerSevice.sendMail(newUserDetail.email,"Xác nhận Email",emailTemplates.emailVerify(newUserDetail.email,`http://${process.env.HOST_API}/api/v1/users/email-confirm/${this.tokenServ.createToken(data,"3d")}}`))
+
+      this.mailerSevice.sendMail(newUserDetail.email, "Xác nhận Email", emailTemplates.emailVerify(newUserDetail.email, `http://${process.env.HOST_API}/api/v1/users/email-confirm/${this.tokenServ.createToken(data, "3d")}`))
       return res.status(200).json({ message })
     } catch (error) {
       if (error.code == "P2002") {
@@ -69,20 +70,19 @@ export class UsersController {
 
   //Verify Email
   @Get("email-confirm/:token")
-  async verifyEmail(@Param("token") param:string){
+  async verifyEmail(@Param("token") param: string) {
     try {
-      let userDetail:any = this.tokenServ.verify(param)
-      let result:boolean = await this.usersService.confirmEmail(userDetail.email)
+      let userDetail = this.tokenServ.verify(param)
+
+      let result: boolean = await this.usersService.confirmEmail(userDetail.email)
       if (result) {
         console.log("xac minh thanh cong");
-      }else{
+      } else {
         throw result
       }
     } catch (error) {
-        console.log(error);
-        
+      console.log(error);
     }
-    
   }
 
   //Register 1st step
@@ -91,7 +91,7 @@ export class UsersController {
     try {
       let { message, data, error } = await this.usersService.check_Exist_Fn(check_Exist)
 
-      if(error){
+      if (error) {
         throw error
       }
 
@@ -102,7 +102,7 @@ export class UsersController {
             data
           })
         }
-      }else{
+      } else {
         return res.status(200).json({
           message,
           data
@@ -110,10 +110,53 @@ export class UsersController {
       }
     } catch (error) {
       console.log(error);
-      
+
       return res.status(500).json({
-        message:"Lỗi gì đó!",
+        message: "Lỗi gì đó!",
         error
+      })
+    }
+  }
+
+  //login
+  @Post("login")
+  async loginFn(@Body() loginInfo:loginUserDto, @Res() res:Response){
+    try {
+      let{message, info} = await this.usersService.loginFn(loginInfo)
+      if (info) {
+        return res.status(200).json({
+          message,
+          token:this.tokenServ.createToken(info,"1d")
+        })
+      }else{
+        return res.status(213).json({
+          message
+        })
+      }
+    } catch (error) {
+        return res.status(500).json({
+          message:"Lỗi j nhỉ?",
+          error
+        })
+    }
+  }
+
+  //checkLogin
+  @Get("check-login/:token")
+  async checkLoginFn(@Param("token") token:string, @Res() res:Response){
+    try {
+      let loginUser = this.tokenServ.verify(token)
+      let result = await this.usersService.checkLoginFn(loginUser)
+      if (result) {
+        return res.status(200).json({
+          confirm:true
+        })
+      }else{
+        throw false
+      }
+    } catch (error) {
+      return res.status(213).json({
+        confirm:false
       })
     }
   }

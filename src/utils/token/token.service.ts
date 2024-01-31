@@ -7,8 +7,14 @@ export class tokenService {
         let token = sign(data,process.env.PRIVATE_KEY,{expiresIn:time})
         return token
     }
-    verify = (token:string) => {
-        let userDetail = verify(token , process.env.PRIVATE_KEY)
-        return userDetail
+    verify = (token:string):any => {
+        try {
+            let userDetail = verify(token , process.env.PRIVATE_KEY)  
+            return userDetail
+        } catch (error) {
+            console.log(error);
+            
+            return false
+        }
     }
 }

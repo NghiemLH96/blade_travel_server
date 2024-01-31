@@ -26,6 +26,7 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/serve-static": "^4.0.0",
     "@prisma/client": "^5.8.0",
     "@types/cors": "^2.8.17",
     "bcrypt": "^5.1.1",
