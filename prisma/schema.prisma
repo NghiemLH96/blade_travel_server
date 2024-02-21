@@ -12,13 +12,43 @@ model users {
   email        String     @unique
   email_verify Boolean    @default(false)
   password     String
-  role         userRole   @default(member)
   status       Boolean    @default(true)
   createAt     String
   updateAt     String
   phone        String     @unique
   avatar       String?    @db.LongText
   ipList       user_IPs[]
+}
+
+enum adminRole {
+  business
+  admin
+}
+
+enum adminDep {
+  specialist
+  manager
+  director
+}
+
+model admins {
+  id           Int        @id @default(autoincrement())
+  username     String     @unique
+  password     String
+  status       Boolean    @default(true)
+  department   adminDep
+  createAt     String
+  updateAt     String
+  ipList       admins_IPs[]
+}
+
+model admins_IPs {
+  id              Int    @id @default(autoincrement())
+  ip              String
+  adminID          Int
+  FK_admins_adminsIP admins  @relation(fields: [adminID], references: [id])
+
+  @@index([adminID], map: "admins_IPs_adminID_fkey")
 }
 
 model user_IPs {
@@ -28,10 +58,4 @@ model user_IPs {
   FK_users_userIP users  @relation(fields: [userID], references: [id])
 
   @@index([userID], map: "user_IPs_userID_fkey")
-}
-
-enum userRole {
-  admin
-  business
-  member
 }

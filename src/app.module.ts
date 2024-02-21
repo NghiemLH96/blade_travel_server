@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { mailModule } from './modules/mailer/mailer.module';
 import { tokenModule } from './utils/token/token.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { AdminsModule } from './modules/admins/admins.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     UsersModule,
     mailModule,
     tokenModule,
+    AdminsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

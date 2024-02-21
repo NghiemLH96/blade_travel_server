@@ -41,6 +41,7 @@ export class mailService{
       }
 }
 
+//mail Đăng ký
 export const emailTemplates = {
   emailVerify:(userName:string , verifyLink:string):string=>{
     let mailGenerator = new Mailgen({
@@ -61,6 +62,37 @@ export const emailTemplates = {
                   color: '#b3ccff', // Optional action button color
                   text: 'Xác thực email',
                   link: verifyLink
+              }
+          },
+          outro: 'Nếu gặp bất cứ vấn đề gì khi xác thực, xin hãy trực tiếp phản hồi thông qua địa chỉ email này, chúng tôi sẽ liên hệ đến bạn trong thời gian sớm nhất!'
+      }
+  };
+  var emailBody = mailGenerator.generate(email);
+  return emailBody
+  }
+}
+
+//mail khôi phục mật khẩu
+export const resetPWTemplate = {
+  resetPWNotify:(userName:string , newPasswords:string):string=>{
+    let mailGenerator = new Mailgen({
+      theme: 'default',
+      product: {
+        name: 'MyBlade Traveling',
+        link: 'https://travel.myblade.io.vn/'
+    }
+    })
+
+    var email = {
+      body: {
+          name: userName,
+          intro: `Mật khẩu mới của bạn là : ${newPasswords}`,
+          action: {
+              instructions: `mật khẩu đã khôi phục thành công , mời quý khách đăng nhập với mật khẩu trên và thay đổi mật khẩu để tránh bị đánh mất`,
+              button: {
+                  color: '#b3ccff', // Optional action button color
+                  text: 'Đăng nhập',
+                  link: 'https://travel.myblade.io.vn/auth'
               }
           },
           outro: 'Nếu gặp bất cứ vấn đề gì khi xác thực, xin hãy trực tiếp phản hồi thông qua địa chỉ email này, chúng tôi sẽ liên hệ đến bạn trong thời gian sớm nhất!'
