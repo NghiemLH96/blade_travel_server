@@ -6,13 +6,13 @@ import { AdminsService } from '../admins/admins.service';
 
 @Controller('admins-users')
 export class AdminsUsersController {
-  constructor(private readonly adminsUsersService: AdminsUsersService , private mailerSvc:mailService) {}
+  constructor(private readonly adminsUsersService: AdminsUsersService, private mailerSvc: mailService) { }
 
 
   @Post('get-users')
-  async getUsers(@Body() body:{currentPage:number,pageSize:number},@Res() res: Response) {
+  async getUsers(@Body() body: { currentPage: number, pageSize: number }, @Res() res: Response) {
     try {
-      const result = await this.adminsUsersService.getUsers(body.currentPage,body.pageSize)
+      const result = await this.adminsUsersService.getUsers(body.currentPage, body.pageSize)
       return res.status(200).json({
         data: result
       })
@@ -88,102 +88,25 @@ export class AdminsUsersController {
   }
 
   @Post('users-search')
-  async searchByOption(@Body() body: { status: boolean | null, email: string | null, phone: string | null, currentPage: number, pageSize: number }, @Res() res: Response) {
-    const handleCommand = () => {
-      console.log('body',body);
-      
-          //Tìm kiếm tất cả
-          if (body.status == null && body.email == null && body.phone == null) {
-            return 1;
-          } else {
-            //Tìm kiếm bằng 3 điều kiện
-            if (body.status != null && body.email != null && body.phone != null) {
-              return 2;
-            } else {
-              //status 0
-              if (body.status == null) {
-                //email 1 phone 1
-                if (body.email != null && body.phone != null) {
-                  return 7;
-                }else{
-                  //status 0 email 0
-                  if (body.email == null) {
-                    return 3;
-                  }
-                  //status 0 phone 0
-                  if (body.phone == null) {
-                    return 4;
-                  }
-                }
-              } else {
-                //status 1
-                if (body.email == null && body.phone == null) {
-                  return 5;
-                } else {
-                  //status 1 email 1
-                  if (body.phone == null) {
-                    return 6;
-                  }
-                  //status 1 phone 1
-                  if (body.email == null) {
-                    return 8;
-                  }
-                }
-              }
-            }
-          }
-        }
-        let result: any;
-        let commandKey: number = handleCommand();
-        console.log('commandKey',commandKey);
-        
-        try {
-        switch (commandKey) {
-          case 1:
-            result = await this.adminsUsersService.getUsers(body.currentPage,body.pageSize)
-            break;
-          case 2:
-            result = await this.adminsUsersService.searchByStatusPhoneEmail(body.status, body.email, body.phone, body.currentPage, body.pageSize)
-            break;
-          case 3:
-            result = await this.adminsUsersService.searchByPhone(body.phone, body.currentPage, body.pageSize)
-            break;
-          case 4:
-            result = await this.adminsUsersService.searchByEmail(body.email, body.currentPage, body.pageSize)
-            break;
-          case 5:
-            result = await this.adminsUsersService.searchByStatus(body.status, body.currentPage, body.pageSize)
-            break;
-          case 6:
-            result = await this.adminsUsersService.searchByStatusEmail(body.status, body.email, body.currentPage, body.pageSize)
-            break;
-          case 7:
-            result = await this.adminsUsersService.searchByPhoneEmail(body.email, body.phone, body.currentPage, body.pageSize)
-            break;
-          case 8:
-            result = await this.adminsUsersService.searchByStatusPhone(body.status, body.phone, body.currentPage, body.pageSize)
-            break;
-          default:
-            break;
-        }
-        console.log(result);
-        
-        if (!result.error) {
-          return res.status(200).json({
-            message: result.message,
-            data: result.data,
-            total: result.totalItem
-          })
-        } else {
-          throw result.error
-        }
-      } catch (error) {
-        console.log(error);
-        
-        return res.status(500).json({
-          message: 'Lỗi tìm kiếm',
-          error
+  async searchByOption(@Body() body: { status: boolean | null, email: string, phone: string, currentPage: number, pageSize: number }, @Res() res: Response) {
+    try {
+      const result = await this.adminsUsersService.search(body)
+      if (!result.error) {
+        return res.status(200).json({
+          message: result.message,
+          data: result.data,
+          total: result.totalItem
         })
+      } else {
+        throw result.error
       }
+    } catch (error) {
+      console.log(error);
+
+      return res.status(500).json({
+        message: 'Lỗi tìm kiếm',
+        error
+      })
     }
+  }
 }

@@ -10,6 +10,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { AdminsModule } from './modules/admins/admins.module';
 import { AdminsProductsModule } from './modules/admins-products/admins-products.module';
 import { AdminsUsersModule } from './modules/admins-users/admins-users.module';
+import { AdminAccountsModule } from './modules/admin-accounts/admin-accounts.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AdminsUsersModule } from './modules/admins-users/admins-users.module';
     AdminsModule,
     AdminsProductsModule,
     AdminsUsersModule,
+    AdminAccountsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -59,3 +59,74 @@ model user_IPs {
 
   @@index([userID], map: "user_IPs_userID_fkey")
 }
+
+model actionRecords {
+  id              Int    @id @default(autoincrement())
+  operator  String
+  operatorId  Int
+  action  String @db.LongText
+  recordTime String
+}
+
+enum productMaterial {
+  aluminum
+  inox
+  other
+}
+
+enum productMadeBy {
+  england
+  china
+  hongkong
+  taiwan
+  vietnam
+  japan
+  other
+}
+
+enum productBrand {
+  jett
+  giant
+  life
+  fonix
+  hitasa
+  hero
+  other
+}
+
+model products {
+  id              Int    @id @default(autoincrement())
+  productName String @unique
+  material  productMaterial
+  madeBy  productMadeBy
+  categoryId  Int
+  brand productBrand
+  price Float
+  status  Boolean @default(false)
+  description String @db.LongText @default("")
+  rating Float
+  createAt     String
+  updateAt     String
+  productPics productsPics[]
+  FK_products_categories categories @relation(fields: [categoryId],references: [id])
+}
+
+model categories {
+  id              Int    @id @default(autoincrement())
+  categoryName String @unique
+  status  Boolean @default(false)
+  avatar String @db.LongText
+  createAt     String
+  updateAt     String
+  productsList products[]
+}
+
+model productsPics{
+  id              Int    @id @default(autoincrement())
+  picLink String  @db.LongText
+  createAt     String
+  updateAt     String
+  productId Int
+  FK_products_categories products @relation(fields: [productId],references: [id])
+}
+

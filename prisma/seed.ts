@@ -4,14 +4,121 @@ const prisma = new PrismaClient()
 
 async function main() {
     try {
-        await prisma.admins.create({
-            data:{
-                username:'host',
-                password:hashSync("123456",3),
-                department:'director',
-                createAt:String(Date.now()),
-                updateAt:String(Date.now())
-            }
+        await prisma.admins.createMany({
+            data:[
+                {
+                    username:'host',
+                    password:hashSync("123456",3),
+                    department:'director',
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
+                },
+                {
+                    username:'admin01',
+                    password:hashSync("123456",3),
+                    department:'manager',
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
+                },
+                {
+                    username:'admin02',
+                    password:hashSync("123456",3),
+                    department:'manager',
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
+                },
+                {
+                    username:'admin03',
+                    password:hashSync("123456",3),
+                    department:'manager',
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
+                },
+                {
+                    username:'admin04',
+                    password:hashSync("123456",3),
+                    department:'manager',
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
+                },
+                {
+                    username:'admin05',
+                    password:hashSync("123456",3),
+                    department:'manager',
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
+                },
+                {
+                    username:'admin06',
+                    password:hashSync("123456",3),
+                    department:'manager',
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
+                },
+                {
+                    username:'admin07',
+                    password:hashSync("123456",3),
+                    department:'specialist',
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
+                },
+                {
+                    username:'admin08',
+                    password:hashSync("123456",3),
+                    department:'specialist',
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
+                },
+                {
+                    username:'admin09',
+                    password:hashSync("123456",3),
+                    department:'specialist',
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
+                },
+                {
+                    username:'admin10',
+                    password:hashSync("123456",3),
+                    department:'specialist',
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
+                },
+                {
+                    username:'admin11',
+                    password:hashSync("123456",3),
+                    department:'specialist',
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
+                },
+                {
+                    username:'admin12',
+                    password:hashSync("123456",3),
+                    department:'specialist',
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
+                },
+                {
+                    username:'admin13',
+                    password:hashSync("123456",3),
+                    department:'specialist',
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
+                },
+                {
+                    username:'admin14',
+                    password:hashSync("123456",3),
+                    department:'specialist',
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
+                },
+                {
+                    username:'admin15',
+                    password:hashSync("123456",3),
+                    department:'specialist',
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
+                }
+            ]
         })
 
         await prisma.users.createMany({
@@ -128,9 +235,197 @@ async function main() {
                 }
             ]
         })
+
+        await prisma.categories.createMany({
+            data:[
+                {
+                    id:1,
+                    categoryName:"Xe đạp leo núi",
+                    createAt:"12/26/2023",
+                    updateAt:"12/26/2023",
+                    avatar:"https://robohash.org/saepesitvoluptas.png?size=50x50&set=set1"
+                }
+                ,
+                {
+                    id:2,
+                    categoryName:"Xe đạp gia đình",
+                    createAt:"12/6/2023",
+                    updateAt:"12/26/2023",
+                    avatar:"https://robohash.org/saepesitvoluptas.png?size=50x50&set=set1"
+                }
+                ,
+                {
+                    id:3,
+                    categoryName:"Xe đạp người lớn",
+                    createAt:"12/3/2023",
+                    updateAt:"12/26/2023",
+                    avatar:"https://robohash.org/saepesitvoluptas.png?size=50x50&set=set1"
+                }
+                ,
+                {
+                    id:4,
+                    categoryName:"Xe đạp trẻ em",
+                    createAt:"12/5/2023",
+                    updateAt:"12/26/2023",
+                    avatar:"https://robohash.org/saepesitvoluptas.png?size=50x50&set=set1"
+                }
+            ]
+        })
+
+        await prisma.products.createMany({
+            data:[
+                {
+                    id:1,
+                    productName:"Xe leo núi 1",
+                    material:"inox",
+                    madeBy:"england",
+                    categoryId:1,
+                    price:2380000,
+                    brand:"hero",
+                    rating:4.5,
+                    createAt:"12/26/2023",
+                    updateAt:"12/26/2023"
+                },
+                {
+                    id:2,
+                    productName:"Xe leo núi 2",
+                    material:"inox",
+                    madeBy:"england",
+                    categoryId:1,
+                    price:3800000,
+                    brand:"hero",
+                    rating:4.5,
+                    createAt:"12/26/2023",
+                    updateAt:"12/26/2023"
+                }
+                ,
+                {
+                    id:3,
+                    productName:"Xe leo núi 3",
+                    material:"inox",
+                    madeBy:"england",
+                    categoryId:1,
+                    price:2480000,
+                    brand:"hero",
+                    rating:3.7,
+                    createAt:"12/26/2023",
+                    updateAt:"12/26/2023"
+                },
+                {
+                    id:4,
+                    productName:"Xe gia đình 1",
+                    material:"inox",
+                    madeBy:"england",
+                    categoryId:2,
+                    price:2580000,
+                    brand:"hero",
+                    rating:3.7,
+                    createAt:"12/26/2023",
+                    updateAt:"12/26/2023"
+                },
+                {
+                    id:5,
+                    productName:"Xe gia đình 2",
+                    material:"inox",
+                    madeBy:"hongkong",
+                    categoryId:2,
+                    price:12380000,
+                    brand:"jett",
+                    rating:3.7,
+                    createAt:"12/26/2023",
+                    updateAt:"12/26/2023"
+                },
+                {
+                    id:6,
+                    productName:"Xe gia đình 3",
+                    material:"inox",
+                    madeBy:"hongkong",
+                    categoryId:2,
+                    price:23820000,
+                    brand:"jett",
+                    rating:3.7,
+                    createAt:"12/26/2023",
+                    updateAt:"12/26/2023"
+                },
+                {
+                    id:7,
+                    productName:"Xe người lớn 1",
+                    material:"aluminum",
+                    madeBy:"japan",
+                    categoryId:3,
+                    price:3380000,
+                    brand:"jett",
+                    rating:4.5,
+                    createAt:"12/26/2023",
+                    updateAt:"12/26/2023"
+                },
+                {
+                    id:8,
+                    productName:"Xe người lớn 2",
+                    material:"other",
+                    madeBy:"japan",
+                    categoryId:3,
+                    price:23800500,
+                    brand:"jett",
+                    rating:4.5,
+                    createAt:"12/26/2023",
+                    updateAt:"12/26/2023"
+                },
+                {
+                    id:9,
+                    productName:"Xe người lớn 3",
+                    material:"aluminum",
+                    madeBy:"japan",
+                    categoryId:3,
+                    price:2780000,
+                    brand:"fonix",
+                    rating:4.5,
+                    createAt:"12/26/2023",
+                    updateAt:"12/26/2023"
+                },
+                {
+                    id:10,
+                    productName:"Xe trẻ em 1",
+                    material:"aluminum",
+                    madeBy:"japan",
+                    categoryId:4,
+                    price:2330000,
+                    brand:"fonix",
+                    rating:4.5,
+                    createAt:"12/26/2023",
+                    updateAt:"12/26/2023"
+                },
+                {
+                    id:11,
+                    productName:"Xe trẻ em 2",
+                    material:"inox",
+                    madeBy:"hongkong",
+                    categoryId:4,
+                    price:4380000,
+                    brand:"fonix",
+                    rating:4.5,
+                    createAt:"12/26/2023",
+                    updateAt:"12/26/2023"
+                },
+                {
+                    id:12,
+                    productName:"Xe trẻ em 3",
+                    material:"inox",
+                    madeBy:"china",
+                    categoryId:4,
+                    price:5380000,
+                    brand:"giant",
+                    rating:4.5,
+                    createAt:"12/26/2023",
+                    updateAt:"12/26/2023"
+                }
+            ]
+        })
     } catch (error) {
         
     }
+
+    
 }
 
 main()
