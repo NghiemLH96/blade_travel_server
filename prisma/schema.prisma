@@ -100,9 +100,10 @@ model products {
   categoryId  Int
   brand Int
   price Float
+  avatar String @db.LongText @default("")
   status  Boolean @default(false)
   description String @db.LongText @default("")
-  rating Float
+  deleted Boolean @default(false)
   createAt     String
   updateAt     String
   productPics productsPics[]

@@ -102,9 +102,10 @@ CREATE TABLE `products` (
     `categoryId` INTEGER NOT NULL,
     `brand` INTEGER NOT NULL,
     `price` DOUBLE NOT NULL,
+    `avatar` LONGTEXT NOT NULL DEFAULT '',
     `status` BOOLEAN NOT NULL DEFAULT false,
     `description` LONGTEXT NOT NULL DEFAULT '',
-    `rating` DOUBLE NOT NULL,
+    `deleted` BOOLEAN NOT NULL DEFAULT false,
     `createAt` VARCHAR(191) NOT NULL,
     `updateAt` VARCHAR(191) NOT NULL,
 

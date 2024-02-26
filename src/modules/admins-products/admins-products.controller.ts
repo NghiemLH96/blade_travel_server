@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Req, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { AdminsProductsService } from './admins-products.service';
 import { Response } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { writeFileSync } from 'fs';
 
 @Controller('admin-products')
 export class AdminsProductsController {
@@ -16,15 +18,12 @@ export class AdminsProductsController {
     currentPage:number,
     pageSize:number
   },@Res() res:Response){
-    console.log(searchOption);
     
     try {
       const {message,data,total,error} = await this.adminsProductsService.search(searchOption)
       if (error) {
         throw error
       }
-      
-      console.log("**************",data);
       
       return res.status(200).json({
         message,
@@ -104,6 +103,63 @@ export class AdminsProductsController {
         data
       })
     } catch (error) {
+      return res.status(500).json({
+        error
+      })
+    }
+  }
+
+  @Patch('status')
+  async changeStatus(@Body() item:{id:number,status:boolean},@Res() res:Response){
+    try {
+      const {message , error} = await this.adminsProductsService.changeStatus(item)
+      if (error) {
+        throw error
+      }
+      return res.status(200).json({
+        message
+      })
+    } catch (error) {
+      return res.status(500).json({
+        error
+      })
+    }
+  }
+
+  @Post('create-new')
+  @UseInterceptors(FileInterceptor('avatar'))
+  async createNewProduct(@UploadedFile() file: Express.Multer.File, @Req() req: Request, @Body() body: any, @Res() res: Response){
+    
+    try {
+      let newProductDetail = JSON.parse(body.data)
+      const fileName = file ? `avatar_id_${Math.random()*Date.now()}.${file.mimetype.split("/")[1]}` : null
+      fileName && writeFileSync(`public/imgs/product-avatar/${fileName}`, file.buffer);
+      let { message, error, data } = await this.adminsProductsService.createNewProduct({ ...newProductDetail, avatar:fileName});
+      if (error) {
+        throw error
+      }
+
+      return res.status(200).json({ message })
+    } catch (error) {
+      return res.status(500).json({
+        error
+      })
+    }
+  }
+
+  @Patch('delete')
+  async deleteProduct(@Body() item:{id:number},@Res() res:Response){
+    try {
+      const { message , error } = await this.adminsProductsService.deleteProduct(item.id)
+      if (error) {
+        throw error
+      }
+      return res.status(200).json({
+        message
+      })
+    } catch (error) {
+      //console.log(error);
+      
       return res.status(500).json({
         error
       })

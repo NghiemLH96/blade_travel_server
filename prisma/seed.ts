@@ -147,7 +147,7 @@ async function main() {
                 createAt:String(Date.now()),
                 updateAt:String(Date.now()),
             },{
-                brandName:'Other',
+                brandName:'Khác',
                 createAt:String(Date.now()),
                 updateAt:String(Date.now()),
             }]
@@ -346,7 +346,6 @@ async function main() {
                     categoryId:1,
                     price:2380000,
                     brand:6,
-                    rating:4.5,
                     createAt:String(Date.now()),
                     updateAt:String(Date.now())
                 },
@@ -357,7 +356,6 @@ async function main() {
                     categoryId:1,
                     price:3800000,
                     brand:6,
-                    rating:4.5,
                     createAt:String(Date.now()),
                     updateAt:String(Date.now())
                 }
@@ -369,7 +367,6 @@ async function main() {
                     categoryId:1,
                     price:2480000,
                     brand:6,
-                    rating:3.7,
                     createAt:String(Date.now()),
                     updateAt:String(Date.now())
                 },
@@ -380,7 +377,6 @@ async function main() {
                     categoryId:2,
                     price:2580000,
                     brand:6,
-                    rating:3.7,
                     createAt:String(Date.now()),
                     updateAt:String(Date.now())
                 },
@@ -391,7 +387,6 @@ async function main() {
                     categoryId:2,
                     price:12380000,
                     brand:1,
-                    rating:3.7,
                     createAt:String(Date.now()),
                     updateAt:String(Date.now())
                 },
@@ -402,7 +397,6 @@ async function main() {
                     categoryId:2,
                     price:23820000,
                     brand:1,
-                    rating:3.7,
                     createAt:String(Date.now()),
                     updateAt:String(Date.now())
                 },
@@ -413,7 +407,6 @@ async function main() {
                     categoryId:3,
                     price:3380000,
                     brand:1,
-                    rating:4.5,
                     createAt:String(Date.now()),
                     updateAt:String(Date.now())
                 },
@@ -424,7 +417,6 @@ async function main() {
                     categoryId:3,
                     price:23800500,
                     brand:1,
-                    rating:4.5,
                     createAt:String(Date.now()),
                     updateAt:String(Date.now())
                 },
@@ -435,7 +427,6 @@ async function main() {
                     categoryId:3,
                     price:2780000,
                     brand:4,
-                    rating:4.5,
                     createAt:String(Date.now()),
                     updateAt:String(Date.now())
                 },
@@ -446,7 +437,6 @@ async function main() {
                     categoryId:4,
                     price:2330000,
                     brand:4,
-                    rating:4.5,
                     createAt:String(Date.now()),
                     updateAt:String(Date.now())
                 },
@@ -457,7 +447,6 @@ async function main() {
                     categoryId:4,
                     price:4380000,
                     brand:4,
-                    rating:4.5,
                     createAt:String(Date.now()),
                     updateAt:String(Date.now())
                 },
@@ -468,7 +457,6 @@ async function main() {
                     categoryId:4,
                     price:5380000,
                     brand:2,
-                    rating:4.5,
                     createAt:String(Date.now()),
                     updateAt:String(Date.now())
                 }

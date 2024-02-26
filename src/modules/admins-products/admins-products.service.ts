@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import PrismaService from '../prisma/prisma.service';
+import createProductDto from './dto/create-product.dto';
 
 @Injectable()
 export class AdminsProductsService {
@@ -140,6 +141,71 @@ export class AdminsProductsService {
             }
         } catch (error) {
             return {error}
+        }
+    }
+
+    async changeStatus(item:{id:number,status:boolean}){
+        try {
+            await this.prisma.products.update({
+                where:{
+                    id:item.id
+                },
+                data:{
+                    status:!item.status,
+                    updateAt:String(Date.now())
+                }
+            })
+            return {
+                message:"Thay đổi trạng thái thành công"
+            }
+        } catch (error) {
+            return {
+                error
+            }
+        }
+    }
+
+    async createNewProduct(newProductDetail: createProductDto) {
+        try {
+            let createResult = await this.prisma.products.create({
+                data: {
+                    productName:newProductDetail.productName,
+                    material:newProductDetail.material,
+                    madeBy:newProductDetail.madeBy,
+                    categoryId:newProductDetail.categoryId,
+                    price:newProductDetail.price,
+                    brand:newProductDetail.brand,
+                    avatar:newProductDetail.avatar,
+                    createAt: String(Date.now()),
+                    updateAt: String(Date.now())
+                }
+            })
+            return {
+                message: "Thêm sản phẩm thành công",
+                data: createResult
+            }
+        } catch (error) {
+            return { error }
+        }
+    }
+
+    async deleteProduct(id:number){
+        try {
+            const result = await this.prisma.products.update({
+                where:{
+                    id
+                },
+                data:{
+                    deleted:true
+                }
+            })
+            return {
+                message:"Xoá sản phẩm thành công"
+            }
+        } catch (error) {
+            return {
+                error
+            }
         }
     }
 }
