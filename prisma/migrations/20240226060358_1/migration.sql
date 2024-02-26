@@ -61,13 +61,46 @@ CREATE TABLE `actionRecords` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
+CREATE TABLE `brands` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `brandName` VARCHAR(191) NOT NULL,
+    `createAt` VARCHAR(191) NOT NULL,
+    `updateAt` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `brands_brandName_key`(`brandName`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `madeBy` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `country` VARCHAR(191) NOT NULL,
+    `createAt` VARCHAR(191) NOT NULL,
+    `updateAt` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `madeBy_country_key`(`country`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `material` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `material` VARCHAR(191) NOT NULL,
+    `createAt` VARCHAR(191) NOT NULL,
+    `updateAt` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `material_material_key`(`material`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `products` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `productName` VARCHAR(191) NOT NULL,
-    `material` ENUM('aluminum', 'inox', 'other') NOT NULL,
-    `madeBy` ENUM('england', 'china', 'hongkong', 'taiwan', 'vietnam', 'japan', 'other') NOT NULL,
+    `material` INTEGER NOT NULL,
+    `madeBy` INTEGER NOT NULL,
     `categoryId` INTEGER NOT NULL,
-    `brand` ENUM('jett', 'giant', 'life', 'fonix', 'hitasa', 'hero', 'other') NOT NULL,
+    `brand` INTEGER NOT NULL,
     `price` DOUBLE NOT NULL,
     `status` BOOLEAN NOT NULL DEFAULT false,
     `description` LONGTEXT NOT NULL DEFAULT '',
@@ -108,6 +141,15 @@ ALTER TABLE `admins_IPs` ADD CONSTRAINT `admins_IPs_adminID_fkey` FOREIGN KEY (`
 
 -- AddForeignKey
 ALTER TABLE `user_IPs` ADD CONSTRAINT `user_IPs_userID_fkey` FOREIGN KEY (`userID`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `products` ADD CONSTRAINT `products_material_fkey` FOREIGN KEY (`material`) REFERENCES `material`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `products` ADD CONSTRAINT `products_madeBy_fkey` FOREIGN KEY (`madeBy`) REFERENCES `madeBy`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `products` ADD CONSTRAINT `products_brand_fkey` FOREIGN KEY (`brand`) REFERENCES `brands`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `products` ADD CONSTRAINT `products_categoryId_fkey` FOREIGN KEY (`categoryId`) REFERENCES `categories`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -121,10 +121,88 @@ async function main() {
             ]
         })
 
+        await prisma.brands.createMany({
+            data:[{
+                brandName:'Jett',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            },{
+                brandName:'Giant',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            },{
+                brandName:'Life',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            },{
+                brandName:'Fonix',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            },{
+                brandName:'Hitasa',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            },{
+                brandName:'Hero',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            },{
+                brandName:'Other',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            }]
+        })
+
+        await prisma.material.createMany({
+            data:[{
+                material:'Inox',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            },{
+                material:'Nhôm',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            },{
+                material:'Khác',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            }]
+        })
+
+        await prisma.madeBy.createMany({
+            data:[{
+                country:'Anh',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            },{
+                country:'Trung Quốc',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            },{
+                country:'Hong Kong',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            },{
+                country:'Đài Loan',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            },{
+                country:'Việt Nam',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            },{
+                country:'Nhật Bản',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            },{
+                country:'Khác',
+                createAt:String(Date.now()),
+                updateAt:String(Date.now()),
+            }]
+        })
         await prisma.users.createMany({
             data:[
                 {
-                    id: 1,
                     email: "rroycroft0@gmpg.org",
                     email_verify: false,
                     password: "$2a$04$PGhTLQ.15MbQJO4mPZF.hO7Hzk8sbRWi9TBq95k4BMAg6lL842WmG",
@@ -135,7 +213,6 @@ async function main() {
                     avatar: "https://robohash.org/magnamharumvoluptatem.png?size=50x50&set=set1"
                 },
                 {
-                    id: 2,
                     email: "tledeker1@amazon.co.jp",
                     email_verify: true,
                     password: "$2a$04$xNRu8IJqOyIC.qEDpn7wwe1mKwMoLndxp9ZXp.uMwzxB26RTRNEly",
@@ -146,7 +223,6 @@ async function main() {
                     avatar: "https://robohash.org/autemestquis.png?size=50x50&set=set1"
                 },
                 {
-                    id: 3,
                     email: "mrubinovitch2@woothemes.com",
                     email_verify: true,
                     password: "$2a$04$FdbE3M335DbfdtQgezcjr.ofMR7mtmFVZoPYtowm03UMy0Pjnb5Oa",
@@ -157,7 +233,6 @@ async function main() {
                     avatar: "https://robohash.org/ipsametsoluta.png?size=50x50&set=set1"
                 },
                 {
-                    id: 4,
                     email: "cenrrico3@adobe.com",
                     email_verify: false,
                     password: "$2a$04$BDurFjjZNwXaDURtss4ia.nP3ISyfi7fpINdeh0o19gMwALpEesEC",
@@ -168,7 +243,6 @@ async function main() {
                     avatar: "https://robohash.org/modierroreaque.png?size=50x50&set=set1"
                 },
                 {
-                    id: 5,
                     email: "gtapscott4@twitpic.com",
                     email_verify: true,
                     password: "$2a$04$6kQ4yOoOUqjUNz6p6lrTh.Nx6/hAun6GOeOxWuENXx.40KSxJw3Fi",
@@ -179,7 +253,6 @@ async function main() {
                     avatar: "https://robohash.org/itaquedignissimosiure.png?size=50x50&set=set1"
                 },
                 {
-                    id: 6,
                     email: "cdimond5@paypal.com",
                     email_verify: false,
                     password: "$2a$04$NlKvaZfLE5u4GKnrCGvigexUnM0WyQu7HDkEz.kNMboAVXY0Es8wO",
@@ -190,7 +263,6 @@ async function main() {
                     avatar: "https://robohash.org/officiasedreiciendis.png?size=50x50&set=set1"
                 },
                 {
-                    id: 7,
                     email: "astimson6@jimdo.com",
                     email_verify: false,
                     password: "$2a$04$vG9MS15rpkFYQ8vzzfnkhuQvgTiFsCn7g/Bx9O.CvOu5EZ5fYCHv6",
@@ -201,7 +273,6 @@ async function main() {
                     avatar: "https://robohash.org/reprehenderitrerumillum.png?size=50x50&set=set1"
                 },
                 {
-                    id: 8,
                     email: "ngotcher7@netscape.com",
                     email_verify: true,
                     password: "$2a$04$CNAuBW7dRGAwACeDU.E4Ou0en6AdSzhe5DYmPXe8KzHP053KUvYJC",
@@ -212,7 +283,6 @@ async function main() {
                     avatar: "https://robohash.org/autemnumquamipsa.png?size=50x50&set=set1"
                 },
                 {
-                    id: 9,
                     email: "atracy8@google.es",
                     email_verify: false,
                     password: "$2a$04$zhJSjZnOR0sPEJDyiROHpevvp5rwmL9R10L.2k2mJE/1SnCEKy4x2",
@@ -223,7 +293,6 @@ async function main() {
                     avatar: "https://robohash.org/sedipsumquisquam.png?size=50x50&set=set1"
                 },
                 {
-                    id: 10,
                     email: "agretham9@blinklist.com",
                     email_verify: true,
                     password: "$2a$04$TekrVLYpjs2JdxAm3KrBE.CWCbR1PVpGYxQVE4XEyNEEFmsC4Y5jC",
@@ -239,7 +308,6 @@ async function main() {
         await prisma.categories.createMany({
             data:[
                 {
-                    id:1,
                     categoryName:"Xe đạp leo núi",
                     createAt:"12/26/2023",
                     updateAt:"12/26/2023",
@@ -247,7 +315,6 @@ async function main() {
                 }
                 ,
                 {
-                    id:2,
                     categoryName:"Xe đạp gia đình",
                     createAt:"12/6/2023",
                     updateAt:"12/26/2023",
@@ -255,7 +322,6 @@ async function main() {
                 }
                 ,
                 {
-                    id:3,
                     categoryName:"Xe đạp người lớn",
                     createAt:"12/3/2023",
                     updateAt:"12/26/2023",
@@ -263,7 +329,6 @@ async function main() {
                 }
                 ,
                 {
-                    id:4,
                     categoryName:"Xe đạp trẻ em",
                     createAt:"12/5/2023",
                     updateAt:"12/26/2023",
@@ -275,149 +340,137 @@ async function main() {
         await prisma.products.createMany({
             data:[
                 {
-                    id:1,
                     productName:"Xe leo núi 1",
-                    material:"inox",
-                    madeBy:"england",
+                    material:1,
+                    madeBy:1,
                     categoryId:1,
                     price:2380000,
-                    brand:"hero",
+                    brand:6,
                     rating:4.5,
-                    createAt:"12/26/2023",
-                    updateAt:"12/26/2023"
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
                 },
                 {
-                    id:2,
                     productName:"Xe leo núi 2",
-                    material:"inox",
-                    madeBy:"england",
+                    material:1,
+                    madeBy:1,
                     categoryId:1,
                     price:3800000,
-                    brand:"hero",
+                    brand:6,
                     rating:4.5,
-                    createAt:"12/26/2023",
-                    updateAt:"12/26/2023"
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
                 }
                 ,
                 {
-                    id:3,
                     productName:"Xe leo núi 3",
-                    material:"inox",
-                    madeBy:"england",
+                    material:1,
+                    madeBy:1,
                     categoryId:1,
                     price:2480000,
-                    brand:"hero",
+                    brand:6,
                     rating:3.7,
-                    createAt:"12/26/2023",
-                    updateAt:"12/26/2023"
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
                 },
                 {
-                    id:4,
                     productName:"Xe gia đình 1",
-                    material:"inox",
-                    madeBy:"england",
+                    material:1,
+                    madeBy:1,
                     categoryId:2,
                     price:2580000,
-                    brand:"hero",
+                    brand:6,
                     rating:3.7,
-                    createAt:"12/26/2023",
-                    updateAt:"12/26/2023"
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
                 },
                 {
-                    id:5,
                     productName:"Xe gia đình 2",
-                    material:"inox",
-                    madeBy:"hongkong",
+                    material:1,
+                    madeBy:3,
                     categoryId:2,
                     price:12380000,
-                    brand:"jett",
+                    brand:1,
                     rating:3.7,
-                    createAt:"12/26/2023",
-                    updateAt:"12/26/2023"
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
                 },
                 {
-                    id:6,
                     productName:"Xe gia đình 3",
-                    material:"inox",
-                    madeBy:"hongkong",
+                    material:1,
+                    madeBy:3,
                     categoryId:2,
                     price:23820000,
-                    brand:"jett",
+                    brand:1,
                     rating:3.7,
-                    createAt:"12/26/2023",
-                    updateAt:"12/26/2023"
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
                 },
                 {
-                    id:7,
                     productName:"Xe người lớn 1",
-                    material:"aluminum",
-                    madeBy:"japan",
+                    material:2,
+                    madeBy:6,
                     categoryId:3,
                     price:3380000,
-                    brand:"jett",
+                    brand:1,
                     rating:4.5,
-                    createAt:"12/26/2023",
-                    updateAt:"12/26/2023"
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
                 },
                 {
-                    id:8,
                     productName:"Xe người lớn 2",
-                    material:"other",
-                    madeBy:"japan",
+                    material:3,
+                    madeBy:6,
                     categoryId:3,
                     price:23800500,
-                    brand:"jett",
+                    brand:1,
                     rating:4.5,
-                    createAt:"12/26/2023",
-                    updateAt:"12/26/2023"
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
                 },
                 {
-                    id:9,
                     productName:"Xe người lớn 3",
-                    material:"aluminum",
-                    madeBy:"japan",
+                    material:2,
+                    madeBy:6,
                     categoryId:3,
                     price:2780000,
-                    brand:"fonix",
+                    brand:4,
                     rating:4.5,
-                    createAt:"12/26/2023",
-                    updateAt:"12/26/2023"
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
                 },
                 {
-                    id:10,
                     productName:"Xe trẻ em 1",
-                    material:"aluminum",
-                    madeBy:"japan",
+                    material:2,
+                    madeBy:6,
                     categoryId:4,
                     price:2330000,
-                    brand:"fonix",
+                    brand:4,
                     rating:4.5,
-                    createAt:"12/26/2023",
-                    updateAt:"12/26/2023"
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
                 },
                 {
-                    id:11,
                     productName:"Xe trẻ em 2",
-                    material:"inox",
-                    madeBy:"hongkong",
+                    material:1,
+                    madeBy:3,
                     categoryId:4,
                     price:4380000,
-                    brand:"fonix",
+                    brand:4,
                     rating:4.5,
-                    createAt:"12/26/2023",
-                    updateAt:"12/26/2023"
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
                 },
                 {
-                    id:12,
                     productName:"Xe trẻ em 3",
-                    material:"inox",
-                    madeBy:"china",
+                    material:1,
+                    madeBy:2,
                     categoryId:4,
                     price:5380000,
-                    brand:"giant",
+                    brand:2,
                     rating:4.5,
-                    createAt:"12/26/2023",
-                    updateAt:"12/26/2023"
+                    createAt:String(Date.now()),
+                    updateAt:String(Date.now())
                 }
             ]
         })

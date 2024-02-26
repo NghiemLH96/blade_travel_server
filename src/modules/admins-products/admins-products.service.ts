@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import PrismaService from '../prisma/prisma.service';
-import { productBrand, productMadeBy, productMaterial } from '@prisma/client';
 
 @Injectable()
 export class AdminsProductsService {
@@ -8,11 +7,11 @@ export class AdminsProductsService {
 
     async search(searchOption: {
         productName: string,
-        material: productMaterial | null,
+        material: number | null,
         status: boolean | null,
-        madeBy: productMadeBy | null,
+        madeBy: number | null,
         category: number | null,
-        brand: productBrand | null,
+        brand: number | null,
         currentPage: number,
         pageSize: number
     }) {
@@ -39,7 +38,7 @@ export class AdminsProductsService {
                             brand:searchOption.brand == null ? {} : searchOption.brand
                         }
                     ]
-                  }
+                }
             })
             const result = await this.prisma.products.findMany({
                 where: {
@@ -66,7 +65,10 @@ export class AdminsProductsService {
                   },
                   
                 include: {
-                    FK_products_categories: true
+                    FK_products_categories: true,
+                    FK_products_brands: true,
+                    FK_products_material:true,
+                    FK_products_madeBy:true
                 },
                 skip: (searchOption.currentPage - 1) * searchOption.pageSize,
                 take: searchOption.pageSize
@@ -82,6 +84,62 @@ export class AdminsProductsService {
                 message: "Lấy dữ liệu thất bại",
                 error
             }
+        }
+    }
+
+    async getBrand(){
+        try {
+            const result = await this.prisma.brands.findMany({})
+            if (result) {
+                return {
+                    message:'Lấy nhãn hiệu thành công',
+                    data:result
+                }
+            }
+        } catch (error) {
+            return {error}
+        }
+    }
+    
+    async getMadeBy(){
+        try {
+            const result = await this.prisma.madeBy.findMany({})
+            if (result) {
+                return {
+                    message:'Lấy nhãn hiệu thành công',
+                    data:result
+                }
+            }
+        } catch (error) {
+            return {error}
+        }
+    }
+
+    async getCategories(){
+        try {
+            const result = await this.prisma.categories.findMany({})
+            if (result) {
+                return {
+                    message:'Lấy nhãn hiệu thành công',
+                    data:result
+                }
+            }
+        } catch (error) {
+            return {error}
+        }
+    }
+
+    async getMaterial(){
+        try {
+            const result = await this.prisma.material.findMany({})
+            if (result) {
+                return {
+                    message:'Lấy nhãn hiệu thành công',
+                    data:result
+                }
+            }
+        } catch (error) {
+            return {error}
         }
     }
 }

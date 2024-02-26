@@ -1,7 +1,6 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { AdminsProductsService } from './admins-products.service';
 import { Response } from 'express';
-import { productBrand, productMadeBy, productMaterial} from '@prisma/client';
 
 @Controller('admin-products')
 export class AdminsProductsController {
@@ -9,11 +8,11 @@ export class AdminsProductsController {
   @Post('search')
   async search(@Body() searchOption:{
     productName:string,
-    material:productMaterial|null,
+    material:number|null,
     status:boolean|null,
-    madeBy:productMadeBy|null,
+    madeBy:number|null,
     category:number|null,
-    brand: productBrand| null
+    brand: number| null
     currentPage:number,
     pageSize:number
   },@Res() res:Response){
@@ -25,12 +24,84 @@ export class AdminsProductsController {
         throw error
       }
       
-      console.log(data);
+      console.log("**************",data);
       
       return res.status(200).json({
         message,
         data,
         total
+      })
+    } catch (error) {
+      return res.status(500).json({
+        error
+      })
+    }
+  }
+
+  @Get('brands')
+  async getBrands(@Res() res:Response){
+    try {
+      const {message , data , error} = await this.adminsProductsService.getBrand()
+      if (error) {
+        throw error
+      }
+      return res.status(200).json({
+        message,
+        data
+      })
+    } catch (error) {
+      return res.status(500).json({
+        error
+      })
+    }
+  }
+
+  @Get('made-by')
+  async getMadeBy(@Res() res:Response){
+    try {
+      const {message , data , error} = await this.adminsProductsService.getMadeBy()
+      if (error) {
+        throw error
+      }
+      return res.status(200).json({
+        message,
+        data
+      })
+    } catch (error) {
+      return res.status(500).json({
+        error
+      })
+    }
+  }
+
+  @Get('categories')
+  async getCategories(@Res() res:Response){
+    try {
+      const {message , data , error} = await this.adminsProductsService.getCategories()
+      if (error) {
+        throw error
+      }
+      return res.status(200).json({
+        message,
+        data
+      })
+    } catch (error) {
+      return res.status(500).json({
+        error
+      })
+    }
+  }
+
+  @Get('material')
+  async getMaterial(@Res() res:Response){
+    try {
+      const {message , data , error} = await this.adminsProductsService.getMaterial()
+      if (error) {
+        throw error
+      }
+      return res.status(200).json({
+        message,
+        data
       })
     } catch (error) {
       return res.status(500).json({

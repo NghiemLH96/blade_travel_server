@@ -68,39 +68,37 @@ model actionRecords {
   recordTime String
 }
 
-enum productMaterial {
-  aluminum
-  inox
-  other
+model brands {
+  id              Int    @id @default(autoincrement())
+  brandName String @unique
+  products products[]
+  createAt     String
+  updateAt     String
 }
 
-enum productMadeBy {
-  england
-  china
-  hongkong
-  taiwan
-  vietnam
-  japan
-  other
+model madeBy {
+  id              Int    @id @default(autoincrement())
+  country String  @unique
+  products products[]
+  createAt     String
+  updateAt     String
 }
 
-enum productBrand {
-  jett
-  giant
-  life
-  fonix
-  hitasa
-  hero
-  other
+model material {
+  id              Int    @id @default(autoincrement())
+  material String @unique
+  products products[]
+  createAt     String
+  updateAt     String
 }
 
 model products {
   id              Int    @id @default(autoincrement())
   productName String @unique
-  material  productMaterial
-  madeBy  productMadeBy
+  material  Int
+  madeBy  Int
   categoryId  Int
-  brand productBrand
+  brand Int
   price Float
   status  Boolean @default(false)
   description String @db.LongText @default("")
@@ -108,6 +106,9 @@ model products {
   createAt     String
   updateAt     String
   productPics productsPics[]
+  FK_products_material material @relation(fields: [material],references: [id])
+  FK_products_madeBy madeBy @relation(fields: [madeBy],references: [id])
+  FK_products_brands brands @relation(fields: [brand],references: [id])
   FK_products_categories categories @relation(fields: [categoryId],references: [id])
 }
 
