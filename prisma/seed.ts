@@ -367,7 +367,8 @@ async function main() {
                     price: 2380000,
                     brand: 6,
                     createAt: String(Date.now()),
-                    updateAt: String(Date.now())
+                    updateAt: String(Date.now()),
+                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
                 },
                 {
                     productName: "Xe leo núi 2",
@@ -377,7 +378,8 @@ async function main() {
                     price: 3800000,
                     brand: 6,
                     createAt: String(Date.now()),
-                    updateAt: String(Date.now())
+                    updateAt: String(Date.now()),
+                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
                 }
                 ,
                 {
@@ -388,7 +390,8 @@ async function main() {
                     price: 2480000,
                     brand: 6,
                     createAt: String(Date.now()),
-                    updateAt: String(Date.now())
+                    updateAt: String(Date.now()),
+                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
                 },
                 {
                     productName: "Xe gia đình 1",
@@ -398,7 +401,8 @@ async function main() {
                     price: 2580000,
                     brand: 6,
                     createAt: String(Date.now()),
-                    updateAt: String(Date.now())
+                    updateAt: String(Date.now()),
+                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
                 },
                 {
                     productName: "Xe gia đình 2",
@@ -408,7 +412,8 @@ async function main() {
                     price: 12380000,
                     brand: 1,
                     createAt: String(Date.now()),
-                    updateAt: String(Date.now())
+                    updateAt: String(Date.now()),
+                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
                 },
                 {
                     productName: "Xe gia đình 3",
@@ -418,7 +423,8 @@ async function main() {
                     price: 23820000,
                     brand: 1,
                     createAt: String(Date.now()),
-                    updateAt: String(Date.now())
+                    updateAt: String(Date.now()),
+                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
                 },
                 {
                     productName: "Xe người lớn 1",
@@ -428,7 +434,8 @@ async function main() {
                     price: 3380000,
                     brand: 1,
                     createAt: String(Date.now()),
-                    updateAt: String(Date.now())
+                    updateAt: String(Date.now()),
+                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
                 },
                 {
                     productName: "Xe người lớn 2",
@@ -438,7 +445,8 @@ async function main() {
                     price: 23800500,
                     brand: 1,
                     createAt: String(Date.now()),
-                    updateAt: String(Date.now())
+                    updateAt: String(Date.now()),
+                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
                 },
                 {
                     productName: "Xe người lớn 3",
@@ -448,7 +456,8 @@ async function main() {
                     price: 2780000,
                     brand: 4,
                     createAt: String(Date.now()),
-                    updateAt: String(Date.now())
+                    updateAt: String(Date.now()),
+                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
                 },
                 {
                     productName: "Xe trẻ em 1",
@@ -458,7 +467,8 @@ async function main() {
                     price: 2330000,
                     brand: 4,
                     createAt: String(Date.now()),
-                    updateAt: String(Date.now())
+                    updateAt: String(Date.now()),
+                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
                 },
                 {
                     productName: "Xe trẻ em 2",
@@ -468,7 +478,8 @@ async function main() {
                     price: 4380000,
                     brand: 4,
                     createAt: String(Date.now()),
-                    updateAt: String(Date.now())
+                    updateAt: String(Date.now()),
+                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
                 },
                 {
                     productName: "Xe trẻ em 3",
@@ -478,7 +489,8 @@ async function main() {
                     price: 5380000,
                     brand: 2,
                     createAt: String(Date.now()),
-                    updateAt: String(Date.now())
+                    updateAt: String(Date.now()),
+                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
                 }
             ]
         })

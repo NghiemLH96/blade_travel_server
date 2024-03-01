@@ -121,7 +121,7 @@ CREATE TABLE `products` (
     `categoryId` INTEGER NOT NULL,
     `brand` INTEGER NOT NULL,
     `price` DOUBLE NOT NULL,
-    `avatar` LONGTEXT NOT NULL DEFAULT '',
+    `avatar` LONGTEXT NOT NULL,
     `status` BOOLEAN NOT NULL DEFAULT false,
     `description` LONGTEXT NOT NULL DEFAULT '',
     `deleted` BOOLEAN NOT NULL DEFAULT false,

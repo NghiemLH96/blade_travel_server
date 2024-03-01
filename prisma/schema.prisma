@@ -111,7 +111,7 @@ model products {
   categoryId             Int
   brand                  Int
   price                  Float
-  avatar                 String         @default("") @db.LongText
+  avatar                 String         @db.LongText
   status                 Boolean        @default(false)
   description            String         @default("") @db.LongText
   deleted                Boolean        @default(false)
