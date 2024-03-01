@@ -7,6 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//Nguoi dung
 model users {
   id           Int        @id @default(autoincrement())
   email        String     @unique
