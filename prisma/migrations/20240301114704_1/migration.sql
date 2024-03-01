@@ -21,11 +21,24 @@ CREATE TABLE `admins` (
     `username` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
     `status` BOOLEAN NOT NULL DEFAULT true,
-    `department` ENUM('specialist', 'manager', 'director') NOT NULL,
+    `department` INTEGER NOT NULL,
     `createAt` VARCHAR(191) NOT NULL,
     `updateAt` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `admins_username_key`(`username`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `departments` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `department` VARCHAR(191) NOT NULL,
+    `status` BOOLEAN NOT NULL DEFAULT false,
+    `deleted` BOOLEAN NOT NULL DEFAULT false,
+    `createAt` VARCHAR(191) NOT NULL,
+    `updateAt` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `departments_department_key`(`department`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -64,6 +77,8 @@ CREATE TABLE `actionRecords` (
 CREATE TABLE `brands` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `brandName` VARCHAR(191) NOT NULL,
+    `status` BOOLEAN NOT NULL DEFAULT false,
+    `deleted` BOOLEAN NOT NULL DEFAULT false,
     `createAt` VARCHAR(191) NOT NULL,
     `updateAt` VARCHAR(191) NOT NULL,
 
@@ -75,6 +90,8 @@ CREATE TABLE `brands` (
 CREATE TABLE `madeBy` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `country` VARCHAR(191) NOT NULL,
+    `status` BOOLEAN NOT NULL DEFAULT false,
+    `deleted` BOOLEAN NOT NULL DEFAULT false,
     `createAt` VARCHAR(191) NOT NULL,
     `updateAt` VARCHAR(191) NOT NULL,
 
@@ -86,6 +103,8 @@ CREATE TABLE `madeBy` (
 CREATE TABLE `material` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `material` VARCHAR(191) NOT NULL,
+    `status` BOOLEAN NOT NULL DEFAULT false,
+    `deleted` BOOLEAN NOT NULL DEFAULT false,
     `createAt` VARCHAR(191) NOT NULL,
     `updateAt` VARCHAR(191) NOT NULL,
 
@@ -118,7 +137,7 @@ CREATE TABLE `categories` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `categoryName` VARCHAR(191) NOT NULL,
     `status` BOOLEAN NOT NULL DEFAULT false,
-    `avatar` LONGTEXT NOT NULL,
+    `deleted` BOOLEAN NOT NULL DEFAULT false,
     `createAt` VARCHAR(191) NOT NULL,
     `updateAt` VARCHAR(191) NOT NULL,
 
@@ -136,6 +155,9 @@ CREATE TABLE `productsPics` (
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `admins` ADD CONSTRAINT `admins_department_fkey` FOREIGN KEY (`department`) REFERENCES `departments`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `admins_IPs` ADD CONSTRAINT `admins_IPs_adminID_fkey` FOREIGN KEY (`adminID`) REFERENCES `admins`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

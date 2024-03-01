@@ -25,28 +25,33 @@ enum adminRole {
   admin
 }
 
-enum adminDep {
-  specialist
-  manager
-  director
+model admins {
+  id         Int          @id @default(autoincrement())
+  username   String       @unique
+  password   String
+  status     Boolean      @default(true)
+  department Int
+  createAt   String
+  updateAt   String
+  ipList     admins_IPs[]
+  FK_admins_departments departments @relation(fields: [department],references: [id])
 }
 
-model admins {
-  id           Int        @id @default(autoincrement())
-  username     String     @unique
-  password     String
-  status       Boolean    @default(true)
-  department   adminDep
-  createAt     String
-  updateAt     String
-  ipList       admins_IPs[]
+model departments {
+  id       Int        @id @default(autoincrement())
+  department String     @unique
+  status   Boolean    @default(false)
+  admins admins[]
+  deleted Boolean @default(false)
+  createAt String
+  updateAt String
 }
 
 model admins_IPs {
-  id              Int    @id @default(autoincrement())
-  ip              String
-  adminID          Int
-  FK_admins_adminsIP admins  @relation(fields: [adminID], references: [id])
+  id                 Int    @id @default(autoincrement())
+  ip                 String
+  adminID            Int
+  FK_admins_adminsIP admins @relation(fields: [adminID], references: [id])
 
   @@index([adminID], map: "admins_IPs_adminID_fkey")
 }
@@ -61,74 +66,79 @@ model user_IPs {
 }
 
 model actionRecords {
-  id              Int    @id @default(autoincrement())
-  operator  String
-  operatorId  Int
-  action  String @db.LongText
+  id         Int    @id @default(autoincrement())
+  operator   String
+  operatorId Int
+  action     String @db.LongText
   recordTime String
 }
 
 model brands {
-  id              Int    @id @default(autoincrement())
-  brandName String @unique
-  products products[]
-  createAt     String
-  updateAt     String
+  id        Int        @id @default(autoincrement())
+  brandName String     @unique
+  products  products[]
+  status    Boolean    @default(false)
+  deleted Boolean @default(false)
+  createAt  String
+  updateAt  String
 }
 
 model madeBy {
-  id              Int    @id @default(autoincrement())
-  country String  @unique
+  id       Int        @id @default(autoincrement())
+  country  String     @unique
   products products[]
-  createAt     String
-  updateAt     String
+  status   Boolean    @default(false)
+  deleted Boolean @default(false)
+  createAt String
+  updateAt String
 }
 
 model material {
-  id              Int    @id @default(autoincrement())
-  material String @unique
+  id       Int        @id @default(autoincrement())
+  material String     @unique
+  status   Boolean    @default(false)
+  deleted Boolean @default(false)
   products products[]
-  createAt     String
-  updateAt     String
+  createAt String
+  updateAt String
 }
 
 model products {
-  id              Int    @id @default(autoincrement())
-  productName String @unique
-  material  Int
-  madeBy  Int
-  categoryId  Int
-  brand Int
-  price Float
-  avatar String @db.LongText @default("")
-  status  Boolean @default(false)
-  description String @db.LongText @default("")
-  deleted Boolean @default(false)
-  createAt     String
-  updateAt     String
-  productPics productsPics[]
-  FK_products_material material @relation(fields: [material],references: [id])
-  FK_products_madeBy madeBy @relation(fields: [madeBy],references: [id])
-  FK_products_brands brands @relation(fields: [brand],references: [id])
-  FK_products_categories categories @relation(fields: [categoryId],references: [id])
+  id                     Int            @id @default(autoincrement())
+  productName            String         @unique
+  material               Int
+  madeBy                 Int
+  categoryId             Int
+  brand                  Int
+  price                  Float
+  avatar                 String         @default("") @db.LongText
+  status                 Boolean        @default(false)
+  description            String         @default("") @db.LongText
+  deleted                Boolean        @default(false)
+  createAt               String
+  updateAt               String
+  productPics            productsPics[]
+  FK_products_material   material       @relation(fields: [material], references: [id])
+  FK_products_madeBy     madeBy         @relation(fields: [madeBy], references: [id])
+  FK_products_brands     brands         @relation(fields: [brand], references: [id])
+  FK_products_categories categories     @relation(fields: [categoryId], references: [id])
 }
 
 model categories {
-  id              Int    @id @default(autoincrement())
-  categoryName String @unique
-  status  Boolean @default(false)
-  avatar String @db.LongText
+  id           Int        @id @default(autoincrement())
+  categoryName String     @unique
+  status       Boolean    @default(false)
+  deleted Boolean @default(false)
   createAt     String
   updateAt     String
   productsList products[]
 }
 
-model productsPics{
-  id              Int    @id @default(autoincrement())
-  picLink String  @db.LongText
-  createAt     String
-  updateAt     String
-  productId Int
-  FK_products_categories products @relation(fields: [productId],references: [id])
+model productsPics {
+  id                     Int      @id @default(autoincrement())
+  picLink                String   @db.LongText
+  createAt               String
+  updateAt               String
+  productId              Int
+  FK_products_categories products @relation(fields: [productId], references: [id])
 }
-

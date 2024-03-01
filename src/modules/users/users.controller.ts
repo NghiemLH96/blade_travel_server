@@ -33,13 +33,14 @@ export class UsersController {
       })
     }
   }
+
   //Register 2nd step
   @Post()
   @UseInterceptors(FileInterceptor('avatar'))
   async createNewUser(@UploadedFile() file: Express.Multer.File, @Req() req: Request, @Ip() ip: string, @Body() body: any, @Res() res: Response) {
     try {
       let newUserDetail = JSON.parse(body.data)
-      const fileName = file ? `avatar_${newUserDetail.phone}.${file.mimetype.split("/")[1]}` : null
+      const fileName = file ? `avatar_${newUserDetail.email}.${file.mimetype.split("/")[1]}` : null
       fileName && writeFileSync(`public/imgs/avatars/${fileName}`, file.buffer);
       //let realIp = req.headers['x-forwarded-for'].toString().split(",")[0]
       let { message, error, data } = await this.usersService.createNewUser({ ...newUserDetail, ip: "127.0.0.1" , avatar:fileName});
