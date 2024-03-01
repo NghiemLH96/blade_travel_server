@@ -114,7 +114,7 @@ model products {
   price                  Float
   avatar                 String         @db.LongText
   status                 Boolean        @default(false)
-  description            String         @default("") @db.LongText
+  description            String?         @db.LongText
   deleted                Boolean        @default(false)
   createAt               String
   updateAt               String
