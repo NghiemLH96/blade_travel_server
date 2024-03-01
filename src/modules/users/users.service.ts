@@ -37,6 +37,7 @@ export class UsersService {
         }
     }
 
+    //kiem tra ton tai
     async check_Exist_Fn(check_Exist: checkExistUserDto) {
         try {
             let checkExist = await this.prisma.users.findFirst({
