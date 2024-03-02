@@ -18,6 +18,8 @@ export class AdminAccountsController {
         })
       }
     } catch (error) {
+      console.log("error",error);
+      
       return res.status(500).json({
         message:'lấy dữ liệu thất bại',
         error
@@ -29,9 +31,6 @@ export class AdminAccountsController {
   async changeStatus(@Body() adminDetail:{id:number,status:boolean},@Res() res:Response){
     try {
       const {message,error} = await this.adminAccountsService.changeStatus(adminDetail)
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message
       })
@@ -46,9 +45,6 @@ export class AdminAccountsController {
   async changeDepartment(@Body() editDetail:{id:number,department:number},@Res() res:Response){
     try {
       const {message,error} = await this.adminAccountsService.changeDepartment(editDetail)
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message
       })
@@ -82,9 +78,6 @@ export class AdminAccountsController {
         return res.status(214).json({
           message
         })
-      }
-      if (error) {
-        throw error
       }
       return res.status(200).json({
         message

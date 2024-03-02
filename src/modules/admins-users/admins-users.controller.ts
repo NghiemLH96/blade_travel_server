@@ -97,8 +97,6 @@ export class AdminsUsersController {
           data: result.data,
           total: result.totalItem
         })
-      } else {
-        throw result.error
       }
     } catch (error) {
       console.log(error);

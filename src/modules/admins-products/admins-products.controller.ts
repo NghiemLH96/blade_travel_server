@@ -29,9 +29,6 @@ export class AdminsProductsController {
   async getBrands(@Res() res:Response){
     try {
       const {message , data , error} = await this.adminsProductsService.getBrand()
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message,
         data
@@ -47,9 +44,6 @@ export class AdminsProductsController {
   async getMadeBy(@Res() res:Response){
     try {
       const {message , data , error} = await this.adminsProductsService.getMadeBy()
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message,
         data
@@ -65,9 +59,6 @@ export class AdminsProductsController {
   async getCategories(@Res() res:Response){
     try {
       const {message , data , error} = await this.adminsProductsService.getCategories()
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message,
         data
@@ -83,9 +74,6 @@ export class AdminsProductsController {
   async getMaterial(@Res() res:Response){
     try {
       const {message , data , error} = await this.adminsProductsService.getMaterial()
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message,
         data
@@ -101,9 +89,6 @@ export class AdminsProductsController {
   async changeStatus(@Body() item:{id:number,status:boolean},@Res() res:Response){
     try {
       const {message , error} = await this.adminsProductsService.changeStatus(item)
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message
       })
@@ -133,9 +118,6 @@ export class AdminsProductsController {
             return res.status(214).json({ message:"Tên sản phẩm đã tồn tại!" })
           }
         }
-        console.log(error);
-        
-        throw error
       }
 
       return res.status(200).json({ message })
@@ -162,9 +144,6 @@ export class AdminsProductsController {
     }
     try {
       let {message , error} = await this.adminsProductsService.uploadImgs(uploadDataList,Number(body.productId));
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message
       })
@@ -182,9 +161,6 @@ export class AdminsProductsController {
   async deleteProduct(@Body() item:{id:number},@Res() res:Response){
     try {
       const { message , error } = await this.adminsProductsService.deleteProduct(item.id)
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message
       })
@@ -201,9 +177,6 @@ export class AdminsProductsController {
   async changeMaterialStatus(@Body() item:{id:number,status:boolean},@Res() res:Response){
     try {
       const {message , error} = await this.adminsProductsService.changeMaterialStatus(item)
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message
       })
@@ -218,9 +191,6 @@ export class AdminsProductsController {
   async createNewMaterial(@Body() body:{newMaterialName:string} ,@Res() res:Response){
     try {
       const { message , error } = await this.adminsProductsService.createNewMaterial(body.newMaterialName)
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message
       })
@@ -235,9 +205,6 @@ export class AdminsProductsController {
   async deleteMaterial(@Query() query:{id:string},@Res() res:Response){
     try {
       const {message, success , error} = await this.adminsProductsService.deleteMaterial(Number(query.id))
-      if (error) {
-        throw error
-      }
       if (success) {
         return res.status(200).json({
           message
@@ -259,9 +226,6 @@ export class AdminsProductsController {
   async changeBrandStatus(@Body() item:{id:number,status:boolean},@Res() res:Response){
     try {
       const {message , error} = await this.adminsProductsService.changeBrandStatus(item)
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message
       })
@@ -276,9 +240,6 @@ export class AdminsProductsController {
   async createNewBrand(@Body() body:{newBrandName:string} ,@Res() res:Response){
     try {
       const { message , error } = await this.adminsProductsService.createNewBrand(body.newBrandName)
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message
       })
@@ -295,9 +256,6 @@ export class AdminsProductsController {
   async deleteBrand(@Query() query:{id:string},@Res() res:Response){
     try {
       const {message, success , error} = await this.adminsProductsService.deleteBrand(Number(query.id))
-      if (error) {
-        throw error
-      }
       if (success) {
         return res.status(200).json({
           message
@@ -319,9 +277,6 @@ export class AdminsProductsController {
   async changeCategoryStatus(@Body() item:{id:number,status:boolean},@Res() res:Response){
     try {
       const {message , error} = await this.adminsProductsService.changeCategoryStatus(item)
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message
       })
@@ -336,9 +291,6 @@ export class AdminsProductsController {
   async createNewCategory(@Body() body:{newCategoryName:string} ,@Res() res:Response){
     try {
       const { message , error } = await this.adminsProductsService.createNewCategory(body.newCategoryName)
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message
       })
@@ -355,9 +307,6 @@ export class AdminsProductsController {
   async deleteCategory(@Query() query:{id:string},@Res() res:Response){
     try {
       const {message, success , error} = await this.adminsProductsService.deleteCategory(Number(query.id))
-      if (error) {
-        throw error
-      }
       if (success) {
         return res.status(200).json({
           message
@@ -379,9 +328,6 @@ export class AdminsProductsController {
   async changeMadeByStatus(@Body() item:{id:number,status:boolean},@Res() res:Response){
     try {
       const {message , error} = await this.adminsProductsService.changeMadeByStatus(item)
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message
       })
@@ -398,9 +344,6 @@ export class AdminsProductsController {
       console.log(body.newCountry);
       
       const { message , error } = await this.adminsProductsService.createNewMadeBy(body.newCountry)
-      if (error) {
-        throw error
-      }
       return res.status(200).json({
         message
       })
@@ -415,9 +358,6 @@ export class AdminsProductsController {
   async deleteMadeBy(@Query() query:{id:string},@Res() res:Response){
     try {
       const {message, success , error} = await this.adminsProductsService.deleteMadeBy(Number(query.id))
-      if (error) {
-        throw error
-      }
       if (success) {
         return res.status(200).json({
           message

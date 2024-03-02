@@ -44,9 +44,6 @@ export class UsersController {
       fileName && writeFileSync(`public/imgs/avatars/${fileName}`, file.buffer);
       //let realIp = req.headers['x-forwarded-for'].toString().split(",")[0]
       let { message, error, data } = await this.usersService.createNewUser({ ...newUserDetail, ip: "127.0.0.1" , avatar:fileName});
-      if (error) {
-        throw error
-      }
 
       this.mailerSevice.sendMail(newUserDetail.email, "Xác nhận Email", emailTemplates.emailVerify(newUserDetail.email, `http://${process.env.HOST_API}/api/v1/users/email-confirm/${this.tokenServ.createToken(data, "3d")}`))
       return res.status(200).json({ message })
@@ -79,8 +76,6 @@ export class UsersController {
       let result: boolean = await this.usersService.confirmEmail(userDetail.email)
       if (result) {
         console.log("xac minh thanh cong");
-      } else {
-        throw result
       }
     } catch (error) {
       console.log(error);
@@ -92,10 +87,6 @@ export class UsersController {
   async check_exist(@Body() check_Exist: checkExistUserDto, @Res() res: Response) {
     try {
       let { message, data, error } = await this.usersService.check_Exist_Fn(check_Exist)
-
-      if (error) {
-        throw error
-      }
 
       if (data) {
         if (data) {

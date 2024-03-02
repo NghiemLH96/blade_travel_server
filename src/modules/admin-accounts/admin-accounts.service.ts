@@ -40,6 +40,8 @@ export class AdminAccountsService {
                 count
               }
         } catch (error) {
+            console.log("err2",error);
+            
             return {error}
         }
     }
