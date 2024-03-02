@@ -207,6 +207,8 @@ export class AdminsProductsService {
                 data: createResult
             }
         } catch (error) {
+            console.log("tạo sản phẩm" , error);
+            
             return { error }
         }
     }
