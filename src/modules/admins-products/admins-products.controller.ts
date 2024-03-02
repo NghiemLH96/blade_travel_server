@@ -103,19 +103,13 @@ export class AdminsProductsController {
   @Post('create-new')
   @UseInterceptors(FileInterceptor('avatar'))
   async createNewProduct(@UploadedFile() file: Express.Multer.File, @Req() req: Request, @Body() body: any, @Res() res: Response){
-    
     try {
       let newProductDetail = JSON.parse(body.data)
-
-      const fileName = file ? `avatar_id_${Math.random()*Date.now()}.${file.mimetype.split("/")[1]}` : null
-      console.log(fileName);
       
       const fireBaseFileName = await uploadFileToStorage(file,'product-avatar',file.buffer)
       console.log("fireBaseFileName",fireBaseFileName);
       
       let { message, error } = await this.adminsProductsService.createNewProduct({ ...newProductDetail, avatar:fireBaseFileName});
-      console.log("done",message)
-      console.log("error",error);
       
       if (error) {
         if (error.code == "P2002") {
@@ -137,9 +131,12 @@ export class AdminsProductsController {
   @Post('upload')
   @UseInterceptors(FilesInterceptor('uploadImgs'))
   async uploadFile(@UploadedFiles() files: Array<Express.Multer.File>, @Req() req: Request, @Body() body: any, @Res() res: Response){
-    let uploadDataList = []  
+    let uploadDataList = [] 
+    
     for (const i in files) {
-      let fireBaseFileName = uploadFileToStorage(files[i],'product-pics',(files as any).buffer)
+      let fireBaseFileName = await uploadFileToStorage(files[i],'product-pics',(files as any).buffer)
+      console.log(fireBaseFileName);
+      
       uploadDataList.push({
         picLink:fireBaseFileName,
         productId:Number(body.productId),

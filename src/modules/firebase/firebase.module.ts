@@ -28,7 +28,7 @@ export async function uploadFileToStorage(file:any, folderName:string, bufferDat
     let metadata:any;
     if (!bufferData) {
         // tên file trên file base
-        fileRef = ref(storage, `${folderName}/` + Math.random() * Date.now() + "."  + file.type.split('/')[1]);
+        fileRef = ref(storage, `${folderName}/` + Math.random() * Date.now() + "."  + file.mimetype.split('/')[1]);
     } else {
         // tên file trên file base
         fileRef = ref(storage, `${folderName}/` + `${Date.now() * Math.ceil(Math.random())}` + file.originalname);
