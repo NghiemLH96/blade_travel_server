@@ -208,7 +208,6 @@ export class AdminsProductsService {
             }
         } catch (error) {
             console.log("tạo sản phẩm" , error);
-            
             return { error }
         }
     }

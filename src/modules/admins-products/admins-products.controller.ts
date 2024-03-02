@@ -105,13 +105,16 @@ export class AdminsProductsController {
     
     try {
       let newProductDetail = JSON.parse(body.data)
-      console.log(newProductDetail);
-      console.log(file);
-      
-      
+
       const fileName = file ? `avatar_id_${Math.random()*Date.now()}.${file.mimetype.split("/")[1]}` : null
+      console.log(fileName);
+      
       fileName && writeFileSync(`public/imgs/product-avatar/${fileName}`, file.buffer);
-      let { message, error, data } = await this.adminsProductsService.createNewProduct({ ...newProductDetail, avatar:fileName});
+      console.log("write file")
+      let { message, error } = await this.adminsProductsService.createNewProduct({ ...newProductDetail, avatar:fileName});
+      console.log("done",message)
+      console.log("error",error);
+      
       if (error) {
         if (error.code == "P2002") {
           if (error.meta.target == "products_productName_key") {
