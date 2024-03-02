@@ -110,10 +110,10 @@ export class AdminsProductsController {
       const fileName = file ? `avatar_id_${Math.random()*Date.now()}.${file.mimetype.split("/")[1]}` : null
       console.log(fileName);
       
-      //uploadFileToStorage()
-      fileName && writeFileSync(`var/www/blade_travel_server/public/imgs/product-avatar/${fileName}`, file.buffer);
-      console.log("write file")
-      let { message, error } = await this.adminsProductsService.createNewProduct({ ...newProductDetail, avatar:fileName});
+      const fireBaseFileName = await uploadFileToStorage(file,'product-avatar',file.buffer)
+      console.log("fireBaseFileName",fireBaseFileName);
+      
+      let { message, error } = await this.adminsProductsService.createNewProduct({ ...newProductDetail, avatar:fireBaseFileName});
       console.log("done",message)
       console.log("error",error);
       
@@ -139,10 +139,9 @@ export class AdminsProductsController {
   async uploadFile(@UploadedFiles() files: Array<Express.Multer.File>, @Req() req: Request, @Body() body: any, @Res() res: Response){
     let uploadDataList = []  
     for (const i in files) {
-      let fileName = `product_img_${Number(i)+1}.${files[i].mimetype.split("/")[1]}`
-      writeFileSync(`public/imgs/product-imgs/${fileName}`, files[i].buffer);
+      let fireBaseFileName = uploadFileToStorage(files[i],'product-pics',(files as any).buffer)
       uploadDataList.push({
-        picLink:fileName,
+        picLink:fireBaseFileName,
         productId:Number(body.productId),
         createAt:String(Date.now()),
         updateAt:String(Date.now())

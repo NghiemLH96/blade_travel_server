@@ -17,15 +17,15 @@ const app = initializeApp(firebaseConfig);
 
 export const storage = getStorage(app);
 
-export async function uploadFileToStorage(file, folderName, bufferData = undefined) {
+export async function uploadFileToStorage(file:any, folderName:string, bufferData = undefined) {
     console.log("file",file)
     // nếu file là null thì không làm gì hết
     if (!file) {
         return false
     }
 
-    let fileRef;
-    let metadata;
+    let fileRef:any;
+    let metadata:any;
     if (!bufferData) {
         // tên file trên file base
         fileRef = ref(storage, `${folderName}/` + Math.random() * Date.now() + "."  + file.type.split('/')[1]);
@@ -36,7 +36,7 @@ export async function uploadFileToStorage(file, folderName, bufferData = undefin
             contentType: file.mimetype,
         };
     }
-    let url;
+    let url:any;
     if (bufferData) {
         // upload file lên fire storage
         url = await uploadBytes(fileRef, bufferData, metadata).then(async res => {
