@@ -41,7 +41,8 @@ export class UsersController {
   async createNewUser(@UploadedFile() file: Express.Multer.File, @Req() req: Request, @Ip() ip: string, @Body() body: any, @Res() res: Response) {
     try {
       let newUserDetail = JSON.parse(body.data)
-      const fileName = uploadFileToStorage(file,"user-avatar",file.buffer)
+      const fileName = await uploadFileToStorage(file,"user-avatar",file.buffer)
+      
       //let realIp = req.headers['x-forwarded-for'].toString().split(",")[0]
       let { message, error, data } = await this.usersService.createNewUser({ ...newUserDetail, ip: "127.0.0.1" , avatar:fileName});
 
