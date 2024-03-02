@@ -36,12 +36,18 @@ export class AdminsController {
 
   @Post('check-login')
   async checkLogin(@Body() body: { token: string }, @Res() res: Response) {
-    const loginDetail = this.tokenSrc.verify(body.token)
-    console.log("loginDetail", loginDetail);
+    const loginDetail = await this.tokenSrc.verify(body.token)
+    if (loginDetail == false) {
+      return res.status(215).json({
+        message:"Phiên đăng nhập đã quá thời hạn",
+        result: false
+      })
+    }
     try {
       const result: Boolean = await this.adminsService.checkLogin(loginDetail)
       if (result) {
         return res.status(200).json({
+          message:"Tài khoản đã đang nhập!",
           result: true
         })
       } else {

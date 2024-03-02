@@ -47,7 +47,10 @@ export class UsersController {
       let { message, error, data } = await this.usersService.createNewUser({ ...newUserDetail, ip: "127.0.0.1" , avatar:fileName});
 
       this.mailerSevice.sendMail(newUserDetail.email, "Xác nhận Email", emailTemplates.emailVerify(newUserDetail.email, `http://${process.env.HOST_API}/api/v1/users/email-confirm/${this.tokenServ.createToken(data, "3d")}`))
-      return res.status(200).json({ message })
+      if (!error) {
+        return res.status(200).json({ message })
+      }
+      throw error
     } catch (error) {
       if (error.code == "P2002") {
         if (error.meta.target == "users_email_key") {
@@ -61,9 +64,8 @@ export class UsersController {
           })
         }
       }
-      console.log(error);
       
-      return res.status(500).json({
+      return res.status(413).json({
         message: "Lỗi gì đó r",
         error
       })
@@ -106,8 +108,7 @@ export class UsersController {
       }
     } catch (error) {
       console.log(error);
-
-      return res.status(500).json({
+      return res.status(413).json({
         message: "Lỗi gì đó!",
         error
       })
@@ -131,7 +132,7 @@ export class UsersController {
         })
       }
     } catch (error) {
-        return res.status(500).json({
+        return res.status(413).json({
           message:"Lỗi j nhỉ?",
           error
         })
@@ -142,7 +143,11 @@ export class UsersController {
   @Get("check-login/:token")
   async checkLoginFn(@Param("token") token:string, @Res() res:Response){
     try {
-      let loginUser = this.tokenServ.verify(token)
+      console.log("token",token);
+      
+      let loginUser = await this.tokenServ.verify(token)
+      console.log("loginUser",loginUser);
+      
       let result = await this.usersService.checkLoginFn(loginUser)
       if (result) {
         return res.status(200).json({

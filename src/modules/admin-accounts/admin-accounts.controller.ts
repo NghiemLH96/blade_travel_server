@@ -20,7 +20,7 @@ export class AdminAccountsController {
     } catch (error) {
       console.log("error",error);
       
-      return res.status(500).json({
+      return res.status(413).json({
         message:'lấy dữ liệu thất bại',
         error
       })
@@ -35,7 +35,7 @@ export class AdminAccountsController {
         message
       })
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -49,7 +49,7 @@ export class AdminAccountsController {
         message
       })
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -64,7 +64,7 @@ export class AdminAccountsController {
         data
       })
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -83,7 +83,7 @@ export class AdminAccountsController {
         message
       })
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }

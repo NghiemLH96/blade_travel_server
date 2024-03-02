@@ -54,7 +54,7 @@ export class AdminsUsersController {
       }
     } catch (error) {
       console.log(error);
-      return res.status(500).json({
+      return res.status(413).json({
         message: 'Lỗi mạng'
       })
     }
@@ -81,7 +81,7 @@ export class AdminsUsersController {
       }
     } catch (error) {
       console.log(error);
-      res.status(500).json({
+      res.status(413).json({
         message: 'Lỗi gì đó'
       })
     }
@@ -101,7 +101,7 @@ export class AdminsUsersController {
     } catch (error) {
       console.log(error);
 
-      return res.status(500).json({
+      return res.status(413).json({
         message: 'Lỗi tìm kiếm',
         error
       })

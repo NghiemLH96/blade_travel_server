@@ -20,7 +20,7 @@ export class AdminsProductsController {
         count
       })
     } catch (err) {
-      return res.status(500).json({
+      return res.status(413).json({
         err
       })
     }
@@ -35,7 +35,7 @@ export class AdminsProductsController {
         data
       })
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -50,7 +50,7 @@ export class AdminsProductsController {
         data
       })
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -65,7 +65,7 @@ export class AdminsProductsController {
         data
       })
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -80,7 +80,7 @@ export class AdminsProductsController {
         data
       })
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -94,7 +94,7 @@ export class AdminsProductsController {
         message
       })
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -122,7 +122,7 @@ export class AdminsProductsController {
       return res.status(200).json({ message })
     } catch (error) {
       console.log(error);
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -152,7 +152,7 @@ export class AdminsProductsController {
     } catch (error) {
       console.log(error);
       
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -169,7 +169,7 @@ export class AdminsProductsController {
     } catch (error) {
       //console.log(error);
       
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -183,7 +183,7 @@ export class AdminsProductsController {
         message
       })
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -197,7 +197,7 @@ export class AdminsProductsController {
         message
       })
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -218,7 +218,7 @@ export class AdminsProductsController {
       }
       
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -232,7 +232,7 @@ export class AdminsProductsController {
         message
       })
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -248,7 +248,7 @@ export class AdminsProductsController {
     } catch (error) {
       console.log(error);
       
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -269,7 +269,7 @@ export class AdminsProductsController {
       }
       
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -283,7 +283,7 @@ export class AdminsProductsController {
         message
       })
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -299,7 +299,7 @@ export class AdminsProductsController {
     } catch (error) {
       console.log(error);
       
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -320,7 +320,7 @@ export class AdminsProductsController {
       }
       
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -334,7 +334,7 @@ export class AdminsProductsController {
         message
       })
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -350,7 +350,7 @@ export class AdminsProductsController {
         message
       })
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
@@ -371,7 +371,7 @@ export class AdminsProductsController {
       }
       
     } catch (error) {
-      return res.status(500).json({
+      return res.status(413).json({
         error
       })
     }
