@@ -4,6 +4,7 @@ import { Response } from 'express';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { writeFileSync } from 'fs';
 import searchQueryDto from './dto/search-query.dto';
+import { uploadFileToStorage } from '../firebase/firebase.module';
 
 @Controller('admin-products')
 export class AdminsProductsController {
@@ -109,7 +110,8 @@ export class AdminsProductsController {
       const fileName = file ? `avatar_id_${Math.random()*Date.now()}.${file.mimetype.split("/")[1]}` : null
       console.log(fileName);
       
-      fileName && writeFileSync(`public/imgs/product-avatar/${fileName}`, file.buffer);
+      //uploadFileToStorage()
+      fileName && writeFileSync(`var/www/blade_travel_server/public/imgs/product-avatar/${fileName}`, file.buffer);
       console.log("write file")
       let { message, error } = await this.adminsProductsService.createNewProduct({ ...newProductDetail, avatar:fileName});
       console.log("done",message)
@@ -126,7 +128,6 @@ export class AdminsProductsController {
       return res.status(200).json({ message })
     } catch (error) {
       console.log(error);
-      
       return res.status(500).json({
         error
       })
