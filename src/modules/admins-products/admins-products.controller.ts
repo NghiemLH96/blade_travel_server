@@ -102,7 +102,7 @@ export class AdminsProductsController {
 
   @Post('create-new')
   @UseInterceptors(FileInterceptor('avatar'))
-  async createNewProduct(@UploadedFile() file: Express.Multer.File, @Req() req: Request, @Body() body: any, @Res() res: Response){
+  async createNewProduct(@UploadedFile() file: Express.Multer.File, @Body() body: any, @Res() res: Response){
     try {
       let newProductDetail = JSON.parse(body.data)
       
@@ -130,7 +130,7 @@ export class AdminsProductsController {
 
   @Post('upload')
   @UseInterceptors(FilesInterceptor('uploadImgs'))
-  async uploadFile(@UploadedFiles() files: Array<Express.Multer.File>, @Req() req: Request, @Body() body: any, @Res() res: Response){
+  async uploadFile(@UploadedFiles() files: Array<Express.Multer.File>, @Body() body: any, @Res() res: Response){
     let uploadDataList = [] 
     
     for (const i in files) {
@@ -239,9 +239,16 @@ export class AdminsProductsController {
   }
 
   @Post('brand-new')
-  async createNewBrand(@Body() body:{newBrandName:string} ,@Res() res:Response){
+  @UseInterceptors(FilesInterceptor('avatar'))
+  async createNewBrand(@UploadedFiles() files: Array<Express.Multer.File>, @Body() body: any, @Res() res: Response){
     try {
-      const { message , error } = await this.adminsProductsService.createNewBrand(body.newBrandName)
+      const brandName = JSON.parse(body.data).brandName
+      let picsList = [];
+      for (const i in files) {
+        const picLink = await uploadFileToStorage(files[i],"assets/brands",files[i].buffer)
+        picsList.push(picLink)
+      }
+      const { message , error } = await this.adminsProductsService.createNewBrand(picsList,brandName)
       return res.status(200).json({
         message
       })

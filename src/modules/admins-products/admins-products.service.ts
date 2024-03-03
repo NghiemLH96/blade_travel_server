@@ -349,11 +349,13 @@ export class AdminsProductsService {
         }
     }
 
-    async createNewBrand(newBrandName:string){
+    async createNewBrand(picsList:Array<string>,brandName:string){
         try {
             await this.prisma.brands.create({
                 data:{
-                    brandName:newBrandName,
+                    brandLogo:picsList[0],
+                    brandChoicePic:picsList[1],
+                    brandName,
                     createAt:String(Date.now()),
                     updateAt:String(Date.now())
                 }

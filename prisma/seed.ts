@@ -143,30 +143,44 @@ async function main() {
         await prisma.brands.createMany({
             data: [{
                 brandName: 'Jett',
+                brandLogo:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbrands%2FJett.png?alt=media&token=1882c748-c356-40df-8ad4-c4153ebc0191",
+                brandChoicePic:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbrands%2FJett.jpg?alt=media&token=1da75fff-7363-4e8a-b1ea-b870992e4211",
                 createAt: String(Date.now()),
                 updateAt: String(Date.now()),
             }, {
                 brandName: 'Giant',
+                brandLogo:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbrands%2FGiant.png?alt=media&token=6275f191-d719-4fa4-ba76-c03d4481b601",
+                brandChoicePic:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbrands%2FGiant.jpg?alt=media&token=3f11a6b5-0dc6-4e4d-baf1-fd6b79d4e3cd",
                 createAt: String(Date.now()),
                 updateAt: String(Date.now()),
             }, {
                 brandName: 'Life',
+                brandLogo:  "https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbrands%2FLife.webp?alt=media&token=9227cf9f-096b-4209-a034-bdf435d58d51",
+                brandChoicePic:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbrands%2FLife.avif?alt=media&token=1bddb70f-4653-423d-8685-42e3fc25c2de",
                 createAt: String(Date.now()),
                 updateAt: String(Date.now()),
             }, {
                 brandName: 'Fonix',
+                brandLogo:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbrands%2FFonix.webp?alt=media&token=e7d61729-a2c2-411e-98af-0c09a186e471",
+                brandChoicePic:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbrands%2Ffonix.jpg?alt=media&token=1db9462d-76fe-43fe-b829-9c516594596a",
                 createAt: String(Date.now()),
                 updateAt: String(Date.now()),
             }, {
                 brandName: 'Hitasa',
+                brandLogo: "https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbrands%2Fhitasa.png?alt=media&token=48ef0474-5636-45b1-9569-89b18f74ae41",
+                brandChoicePic:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbrands%2Fhitasa.jpg?alt=media&token=e1c06e77-7b91-4fc6-8953-cf66b949c511",
                 createAt: String(Date.now()),
                 updateAt: String(Date.now()),
             }, {
                 brandName: 'Hero',
+                brandLogo:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbrands%2FHero.svg?alt=media&token=fec8476b-4549-40b9-bea8-58e06e642ca3",
+                brandChoicePic:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbrands%2FHero.jpg?alt=media&token=b4752ecc-fa42-43ff-8071-e89d14771568",
                 createAt: String(Date.now()),
                 updateAt: String(Date.now()),
             }, {
                 brandName: 'Khác',
+                brandLogo:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbrands%2Fothers-logo-860-5549.png?alt=media&token=c371cb06-e5ca-41d9-8362-2be75cfc48c5",
+                brandChoicePic:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbrands%2Fother.jpg?alt=media&token=55d0bd1a-0d5f-47ba-871f-cd73d3c5c47f",
                 createAt: String(Date.now()),
                 updateAt: String(Date.now()),
             }]

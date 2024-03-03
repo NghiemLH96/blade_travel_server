@@ -77,6 +77,8 @@ model actionRecords {
 model brands {
   id        Int        @id @default(autoincrement())
   brandName String     @unique
+  brandLogo String @db.LongText
+  brandChoicePic String @db.LongText
   products  products[]
   status    Boolean    @default(false)
   deleted Boolean @default(false)
@@ -116,6 +118,7 @@ model products {
   status                 Boolean        @default(false)
   description            String?         @db.LongText
   deleted                Boolean        @default(false)
+  cartId      Int?
   createAt               String
   updateAt               String
   productPics            productsPics[]
@@ -123,6 +126,7 @@ model products {
   FK_products_madeBy     madeBy         @relation(fields: [madeBy], references: [id])
   FK_products_brands     brands         @relation(fields: [brand], references: [id])
   FK_products_categories categories     @relation(fields: [categoryId], references: [id])
+
 }
 
 model categories {
