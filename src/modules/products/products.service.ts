@@ -102,6 +102,8 @@ export class ProductsService {
                 take: Number(query.take)
             })
             const data = [...result]
+            console.log("data",data);
+            
             return {
                 message:"lấy dữ liệu thành công",
                 data,
