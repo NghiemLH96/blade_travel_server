@@ -8,6 +8,7 @@ import { mailService, emailTemplates } from '../mailer/mailer.service';
 import { tokenService } from 'src/utils/token/token.service';
 import { loginUserDto } from './dto/login_user.dto';
 import { uploadFileToStorage } from '../firebase/firebase.module';
+import createUserDto from './dto/create_user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -143,22 +144,41 @@ export class UsersController {
   @Get("check-login/:token")
   async checkLoginFn(@Param("token") token:string, @Res() res:Response){
     try {
-      console.log("token",token);
-      
       let loginUser = await this.tokenServ.verify(token)
-      console.log("loginUser",loginUser);
       
-      let result = await this.usersService.checkLoginFn(loginUser)
-      if (result) {
+      let {data} = await this.usersService.checkLoginFn(loginUser)
+      if (data) {
         return res.status(200).json({
-          confirm:true
+          data
         })
       }else{
-        throw false
+        return res.status(214)
       }
     } catch (error) {
-      return res.status(213).json({
-        confirm:false
+      return res.status(413)
+    }
+  }
+
+  @Post('login-google')
+  async loginWithGoogle(@Body() body:createUserDto, @Res() res:Response){
+    try {
+      const {message,info, error} = await this.usersService.loginWithGoogle(body)
+      if (error) {
+        throw error
+      }
+      if (info) {
+        return res.status(200).json({
+          message,
+          token:this.tokenServ.createToken(info,"1d")
+        })
+      }else{
+        return res.status(214).json({
+          message
+        })
+      }
+    } catch (error) {
+      return res.status(413).json({
+        error
       })
     }
   }

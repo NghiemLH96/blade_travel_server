@@ -297,15 +297,22 @@ export class AdminsProductsController {
   }
 
   @Post('category-new')
-  async createNewCategory(@Body() body:{newCategoryName:string} ,@Res() res:Response){
+  @UseInterceptors(FilesInterceptor('avatar'))
+  async createNewCategory(@UploadedFiles() files: Array<Express.Multer.File>,@Body() body:any ,@Res() res:Response){
     try {
-      const { message , error } = await this.adminsProductsService.createNewCategory(body.newCategoryName)
+      const catName = JSON.parse(body.data).categoryName
+      
+      let fireBaseFileName = await uploadFileToStorage(files[0],'assets/banner',(files[0] as any).buffer)
+      const { message , error } = await this.adminsProductsService.createNewCategory(fireBaseFileName,catName)
+      console.log(message);
+      
+      if (error) {
+        throw error
+      }
       return res.status(200).json({
         message
       })
     } catch (error) {
-      console.log(error);
-      
       return res.status(413).json({
         error
       })

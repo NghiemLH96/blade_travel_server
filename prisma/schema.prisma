@@ -114,6 +114,7 @@ model products {
   categoryId             Int
   brand                  Int
   price                  Float
+  bestSeller  Boolean @default(false)
   avatar                 String         @db.LongText
   status                 Boolean        @default(false)
   description            String?         @db.LongText
@@ -134,6 +135,7 @@ model categories {
   categoryName String     @unique
   status       Boolean    @default(false)
   deleted Boolean @default(false)
+  avatar String @db.LongText
   createAt     String
   updateAt     String
   productsList products[]

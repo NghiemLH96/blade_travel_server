@@ -11,6 +11,7 @@ import { AdminsModule } from './modules/admins/admins.module';
 import { AdminsProductsModule } from './modules/admins-products/admins-products.module';
 import { AdminsUsersModule } from './modules/admins-users/admins-users.module';
 import { AdminAccountsModule } from './modules/admin-accounts/admin-accounts.module';
+import { ProductsModule } from './modules/products/products.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { AdminAccountsModule } from './modules/admin-accounts/admin-accounts.mod
     AdminsProductsModule,
     AdminsUsersModule,
     AdminAccountsModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

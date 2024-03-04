@@ -123,6 +123,7 @@ CREATE TABLE `products` (
     `categoryId` INTEGER NOT NULL,
     `brand` INTEGER NOT NULL,
     `price` DOUBLE NOT NULL,
+    `bestSeller` BOOLEAN NOT NULL DEFAULT false,
     `avatar` LONGTEXT NOT NULL,
     `status` BOOLEAN NOT NULL DEFAULT false,
     `description` LONGTEXT NULL,
@@ -141,6 +142,7 @@ CREATE TABLE `categories` (
     `categoryName` VARCHAR(191) NOT NULL,
     `status` BOOLEAN NOT NULL DEFAULT false,
     `deleted` BOOLEAN NOT NULL DEFAULT false,
+    `avatar` LONGTEXT NOT NULL,
     `createAt` VARCHAR(191) NOT NULL,
     `updateAt` VARCHAR(191) NOT NULL,
 

@@ -146,24 +146,72 @@ export class UsersService {
         }
     }
 
-    async checkLoginFn(data: any):Promise<boolean>{
+    async checkLoginFn(data: any){
         try {
-            if (!data.status) {
-                throw false
-            }
             let loginUser = await this.prisma.users.findFirst({
                 where:{
                     email:data.email
                 }
             })
-            console.log("loginUser",loginUser);
             if (loginUser) {
-                return true
-            }else{
-                return false
+                if (loginUser.status == true) {
+                    return {
+                        data:loginUser
+                    }
+                }else{
+                    return {}
+                }
             }
         } catch (error) {
-            return false
+            return {}
+        }
+    }
+
+    async loginWithGoogle(data:createUserDto){
+        try {
+            const checkExist = await this.prisma.users.findFirst({
+                where:{
+                    email:data.email
+                }
+            })
+            if (checkExist) {
+                if (checkExist.status) {
+                    return {
+                        info:checkExist,
+                        message:"Đăng nhập với google thành công"
+                    }
+                }else{
+                    return {
+                        message:"Tài khoản đã tạm khoá"
+                    }
+                }
+            }else{
+                const result = await this.prisma.users.create({
+                    data:{
+                        email:data.email,
+                        password:data.password,
+                        avatar:data.avatar,
+                        phone:data.phone,
+                        email_verify:true,
+                        createAt:String(Math.random()*Date.now()),
+                        updateAt:String(Math.random()*Date.now())
+                    }
+                })
+                if (result) {
+                    return {
+                        info:result,
+                        message:"Lần đầu đăng nhập , tạo tài khoản thành công"
+                    }
+                }else{
+                    return {
+                        message:"Tạo tài khoản thất bại"
+                    }
+                }
+            }
+        } catch (error) {
+            return {
+                error
+            }
         }
     }
 }

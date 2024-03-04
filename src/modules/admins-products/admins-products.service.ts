@@ -424,13 +424,14 @@ export class AdminsProductsService {
         }
     }
 
-    async createNewCategory(newCategoryName:string){
+    async createNewCategory(fireBaseFileName:string,newCategoryName:string){
         try {
             await this.prisma.categories.create({
                 data:{
                     categoryName:newCategoryName,
                     createAt:String(Date.now()),
-                    updateAt:String(Date.now())
+                    updateAt:String(Date.now()),
+                    avatar:fireBaseFileName
                 }
             })
             return {

@@ -345,28 +345,28 @@ async function main() {
                     categoryName: "Xe đạp leo núi",
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
-
+                    avatar:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbanner%2FMoutain%20Bicycle.png?alt=media&token=287ffd54-de09-4ac7-9b1e-4c0224451900"
                 }
                 ,
                 {
                     categoryName: "Xe đạp gia đình",
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
-
+                    avatar:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbanner%2FCity.png?alt=media&token=d667a8db-0185-4d81-a683-589b9d16c2f2"
                 }
                 ,
                 {
                     categoryName: "Xe đạp người lớn",
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
-
+                    avatar:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbanner%2FClassic%20Bicycle.png?alt=media&token=1fb14826-c6e7-4155-9740-9ecf909d1e6b"
                 }
                 ,
                 {
                     categoryName: "Xe đạp trẻ em",
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
-
+                    avatar:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2Fbanner%2FKid%20Bi.png?alt=media&token=ebb46ae7-df89-42fb-b6ef-7349ed4e37c8"
                 }
             ]
         })
@@ -380,6 +380,7 @@ async function main() {
                     categoryId: 1,
                     price: 2380000,
                     brand: 6,
+                    bestSeller:true,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
                     avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
@@ -391,6 +392,7 @@ async function main() {
                     categoryId: 1,
                     price: 3800000,
                     brand: 6,
+                    bestSeller:true,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
                     avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
@@ -414,6 +416,7 @@ async function main() {
                     categoryId: 2,
                     price: 2580000,
                     brand: 6,
+                    bestSeller:true,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
                     avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
@@ -447,6 +450,7 @@ async function main() {
                     categoryId: 3,
                     price: 3380000,
                     brand: 1,
+                    bestSeller:true,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
                     avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
