@@ -34,6 +34,8 @@ export class ProductsService {
 
     async searchByOption(query: searchQueryDto) {
         try {
+            console.log("query",query);
+            
             const count = await this.prisma.products.count({
                 where: {
                     AND: [
