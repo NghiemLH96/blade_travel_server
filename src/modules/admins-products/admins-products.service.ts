@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import PrismaService from '../prisma/prisma.service';
 import createProductDto from './dto/create-product.dto';
 import searchQueryDto from './dto/search-query.dto';
+import updateProductDto from './dto/update-product.dto';
 
 @Injectable()
 export class AdminsProductsService {
@@ -209,6 +210,29 @@ export class AdminsProductsService {
         } catch (error) {
             console.log("tạo sản phẩm" , error);
             return { error }
+        }
+    }
+
+    async updateDetail(productDetail:updateProductDto){
+        try {
+            await this.prisma.products.update({
+                where:{
+                    id:productDetail.id
+                },
+                data:{
+                    productName:productDetail.productName,
+                    material:productDetail.material,
+                    madeBy:productDetail.madeBy,
+                    categoryId:productDetail.categoryId,
+                    price:Number(productDetail.price),
+                    brand:productDetail.brand
+                }
+            })
+            return {
+                message:"Chỉnh sửa thông tin sản phẩm thành công"
+            }
+        } catch (error) {
+            return {error}
         }
     }
 

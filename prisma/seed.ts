@@ -254,7 +254,7 @@ async function main() {
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
                     phone: "401-270-4588",
-                    avatar: "https://robohash.org/autemestquis.png?size=50x50&set=set1"
+                    avatar: "https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2F01.png?alt=media&token=fdeb32cc-4d98-4dc7-878d-cf5a56920024"
                 },
                 {
                     email: "mrubinovitch2@woothemes.com",
@@ -383,7 +383,7 @@ async function main() {
                     bestSeller:true,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
-                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
+                    avatar:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2F01.png?alt=media&token=fdeb32cc-4d98-4dc7-878d-cf5a56920024"
                 },
                 {
                     productName: "Xe leo núi 2",
@@ -395,7 +395,7 @@ async function main() {
                     bestSeller:true,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
-                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
+                    avatar:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2F01.png?alt=media&token=fdeb32cc-4d98-4dc7-878d-cf5a56920024"
                 }
                 ,
                 {
@@ -407,7 +407,7 @@ async function main() {
                     brand: 6,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
-                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
+                    avatar:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2F01.png?alt=media&token=fdeb32cc-4d98-4dc7-878d-cf5a56920024"
                 },
                 {
                     productName: "Xe gia đình 1",
@@ -419,7 +419,7 @@ async function main() {
                     bestSeller:true,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
-                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
+                    avatar:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2F01.png?alt=media&token=fdeb32cc-4d98-4dc7-878d-cf5a56920024"
                 },
                 {
                     productName: "Xe gia đình 2",
@@ -430,7 +430,7 @@ async function main() {
                     brand: 1,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
-                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
+                    avatar:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2F01.png?alt=media&token=fdeb32cc-4d98-4dc7-878d-cf5a56920024"
                 },
                 {
                     productName: "Xe gia đình 3",
@@ -441,7 +441,7 @@ async function main() {
                     brand: 1,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
-                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
+                    avatar:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2F01.png?alt=media&token=fdeb32cc-4d98-4dc7-878d-cf5a56920024"
                 },
                 {
                     productName: "Xe người lớn 1",
@@ -453,7 +453,7 @@ async function main() {
                     bestSeller:true,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
-                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
+                    avatar:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2F01.png?alt=media&token=fdeb32cc-4d98-4dc7-878d-cf5a56920024"
                 },
                 {
                     productName: "Xe người lớn 2",
@@ -464,7 +464,7 @@ async function main() {
                     brand: 1,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
-                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
+                    avatar:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2F01.png?alt=media&token=fdeb32cc-4d98-4dc7-878d-cf5a56920024"
                 },
                 {
                     productName: "Xe người lớn 3",
@@ -475,7 +475,7 @@ async function main() {
                     brand: 4,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
-                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
+                    avatar:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2F01.png?alt=media&token=fdeb32cc-4d98-4dc7-878d-cf5a56920024"
                 },
                 {
                     productName: "Xe trẻ em 1",
@@ -486,7 +486,7 @@ async function main() {
                     brand: 4,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
-                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
+                    avatar:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2F01.png?alt=media&token=fdeb32cc-4d98-4dc7-878d-cf5a56920024"
                 },
                 {
                     productName: "Xe trẻ em 2",
@@ -497,7 +497,7 @@ async function main() {
                     brand: 4,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
-                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
+                    avatar:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2F01.png?alt=media&token=fdeb32cc-4d98-4dc7-878d-cf5a56920024"
                 },
                 {
                     productName: "Xe trẻ em 3",
@@ -508,7 +508,7 @@ async function main() {
                     brand: 2,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now()),
-                    avatar:"https://robohash.org/autemestquis.png?size=50x50&set=set1"
+                    avatar:"https://firebasestorage.googleapis.com/v0/b/blade-firebase.appspot.com/o/assets%2F01.png?alt=media&token=fdeb32cc-4d98-4dc7-878d-cf5a56920024"
                 }
             ]
         })

@@ -141,11 +141,13 @@ export class UsersController {
   }
 
   //checkLogin
-  @Get("check-login/:token")
-  async checkLoginFn(@Param("token") token:string, @Res() res:Response){
+  @Post("check-login")
+  async checkLoginFn(@Body() body:{token:string}, @Res() res:Response){
     try {
-      let loginUser = await this.tokenServ.verify(token)
-      
+      let loginUser = await this.tokenServ.verify(body.token)
+      if (!loginUser) {
+        res.status(413)
+      }
       let {data} = await this.usersService.checkLoginFn(loginUser)
       if (data) {
         return res.status(200).json({

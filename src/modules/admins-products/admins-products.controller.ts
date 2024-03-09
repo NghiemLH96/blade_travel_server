@@ -1,10 +1,10 @@
-import { Body, Controller, Delete, Get, Patch, Post, Query, Req, Res, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post, Query, Res, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { AdminsProductsService } from './admins-products.service';
 import { Response } from 'express';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { writeFileSync } from 'fs';
 import searchQueryDto from './dto/search-query.dto';
 import { uploadFileToStorage } from '../firebase/firebase.module';
+import updateProductDto from './dto/update-product.dto';
 
 @Controller('admin-products')
 export class AdminsProductsController {
@@ -157,6 +157,26 @@ export class AdminsProductsController {
       })
     }
     
+  }
+
+  @Patch('update-detail')
+  async updateDetail(@Body() body:updateProductDto, @Res() res: Response){
+    try {
+      const {message,error} = await this.adminsProductsService.updateDetail(body)
+      if (error) {
+        throw error
+      }else{
+        return res.status(200).json({
+          message
+        })
+      }
+    } catch (error) {
+      console.log(error);
+      
+      return res.status(413).json({
+        error
+      })
+    }
   }
 
   @Patch('delete')

@@ -104,7 +104,6 @@ export class ProductsService {
                 take: Number(query.take)
             })
             const data = [...result]
-            console.log("data",data);
             
             return {
                 message:"lấy dữ liệu thành công",
@@ -116,6 +115,115 @@ export class ProductsService {
             
             return {
                 message: "Lấy dữ liệu thất bại",
+                error
+            }
+        }
+    }
+
+    async addToCart(userId:number,itemId:number){
+        try {
+            const checkExist = await this.prisma.cartItem.findFirst({
+                where:{
+                    userId,
+                    productId:itemId,
+                    status:"pending"
+                }
+            })
+            if (checkExist) {
+                await this.prisma.cartItem.update({
+                    where:{
+                        id:checkExist.id
+                    },
+                    data:{
+                        quantity:{increment:1}
+                    }
+                })
+                return {message:"Tăng số lượng sản phẩm thành công"}
+            }else{
+                await this.prisma.cartItem.create({
+                    data:{
+                        userId,
+                        productId:itemId,
+                        quantity:1,
+                        createAt:String(Date.now()),
+                        updateAt:String(Date.now())
+                    }
+                })
+                return {message:"Tạo sản phẩm thành công"}
+            }
+        } catch (error) {
+            return {error}
+        }
+    }
+
+    async getCart(userId:number){
+        try {
+            const data = await this.prisma.cartItem.findMany({
+                where:{
+                    userId,
+                    status:'pending'
+                },
+                include:{
+                    FK_products_cartItem:true
+                }
+            })
+            return {
+                message:"lấy dữ liệu thành công",
+                data
+            }
+        } catch (error) {
+            return {error}
+        }
+    }
+
+    async cartIncrease(itemId:number){
+        try {
+            await this.prisma.cartItem.update({
+                where:{
+                    id:itemId
+                },
+                data:{
+                    quantity:{increment:1}
+                }
+            })
+            return {
+                message:'Tăng số lượng sản phẩm thành công'
+            }
+        } catch (error) {
+            return {error}
+        }
+    }
+
+    async cartDecrease(itemId:number){
+        try {
+            await this.prisma.cartItem.update({
+                where:{
+                    id:itemId
+                },
+                data:{
+                    quantity:{decrement:1}
+                }
+            })
+            return {
+                message:'Giảm số lượng sản phẩm thành công'
+            }
+        } catch (error) {
+            return {error}
+        }
+    }
+
+    async removeCartItem(itemId:number){
+        try {
+            await this.prisma.cartItem.delete({
+                where:{
+                    id:itemId
+                }
+            })
+            return {
+                message:'Xoá sản phẩm thành công'
+            }
+        } catch (error) {
+            return {
                 error
             }
         }

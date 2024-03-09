@@ -18,7 +18,26 @@ model users {
   updateAt     String
   phone        String     @unique
   avatar       String?    @db.LongText
+  wallet  Float @default(0)
+  cartItem cartItem[]
   ipList       user_IPs[]
+}
+
+enum cartItemStatus {
+  pending
+  paid
+}
+
+model cartItem{
+  id           Int        @id @default(autoincrement())
+  userId  Int
+  productId Int
+  quantity Int
+  status cartItemStatus @default(pending)
+  createAt     String
+  updateAt     String
+  FK_products_cartItem products @relation(fields: [productId],references: [id])
+  FK_user_cartItem users @relation(fields: [userId],references: [id])
 }
 
 enum adminRole {
@@ -123,6 +142,7 @@ model products {
   createAt               String
   updateAt               String
   productPics            productsPics[]
+  cartProduct cartItem[]
   FK_products_material   material       @relation(fields: [material], references: [id])
   FK_products_madeBy     madeBy         @relation(fields: [madeBy], references: [id])
   FK_products_brands     brands         @relation(fields: [brand], references: [id])
