@@ -233,7 +233,7 @@ export class UsersService {
                     }
                 })
                 return {
-                    message:"Thay đổi mật khẩu thành công1",
+                    message:"Thay đổi mật khẩu thành công",
                     result:true,
                     data
                 }
