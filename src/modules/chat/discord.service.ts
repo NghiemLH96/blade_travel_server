@@ -4,8 +4,8 @@ import { ChatGateway } from "./chat.gateway";
 
 @Injectable()
 export class DiscordService implements OnModuleInit {
-    botToken: string = "MTIxNjM3NzYzODgyMjg3NTE4Nw.GCcKLK.Inv8E5UjLU6cCnRSoywvsz5aoH3AR8tP7eEZAI";
-    guildId: string = "1214930497613070366"
+    botToken: string = process.env.BOTTOKEN;
+    guildId: string = process.env.DISCORD_CHANNEL_ID
     /* Bot */
     client: Client;
     /* Guild */
@@ -25,6 +25,7 @@ export class DiscordService implements OnModuleInit {
         this.client.login(this.botToken)
 
         this.client.on("ready", () => {
+            console.log("Bot đã đăng nhập thành công!")
             this.guild = this.client.guilds.cache.get(this.guildId)
 
 

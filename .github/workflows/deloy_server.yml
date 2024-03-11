@@ -41,6 +41,8 @@ jobs:
           sed -i 's/MAILER_ACC/${{ secrets.MAILER_ACC }}/g' .env
           sed -i 's/MAILER_PASS/${{ secrets.MAILER_PASS }}/g' .env
           sed -i 's/HASH_KEY/${{ secrets.HASH_KEY }}/g' .env
+          sed -i 's/BOTTOKEN/${{ secrets.BOTTOKEN }}/g' .env
+          sed -i 's/DISCORD_CHANNEL_ID/${{ secrets.DISCORD_CHANNEL_ID }}/g' .env
           echo "cài đặt lại node module"
           npm ci
           echo "tạo prisma client cho node modules"
