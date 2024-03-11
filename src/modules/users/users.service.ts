@@ -247,4 +247,19 @@ export class UsersService {
             return {error}
         }
     }
+
+    async topUp(info:{email:string,amount:number}){
+        try {
+            const result = await this.prisma.users.update({
+                where:{
+                    email:info.email
+                },
+                data:{
+                    wallet:{increment:info.amount}
+                }
+            })
+        } catch (error) {
+            
+        }
+    }
 }

@@ -212,4 +212,10 @@ export class UsersController {
       })
     }
   }
+
+  @Post('top-up')
+  async topUp(@Body() body:any){
+    console.log(body);
+    
+  }
 }
