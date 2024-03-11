@@ -24,8 +24,33 @@ model users {
 }
 
 enum cartItemStatus {
+  shopping
   pending
   paid
+}
+
+enum paymentMethod {
+  cod
+  wallet
+}
+
+enum receiptStatus {
+  pending
+  success
+  canceled
+}
+
+model receipts{
+  id           Int        @id @default(autoincrement())
+  address String
+  userEmail String
+  userId  Int
+  phone String
+  paymentMethod paymentMethod
+  status receiptStatus @default(pending)
+  items cartItem[]
+  createAt     String
+  updateAt     String
 }
 
 model cartItem{
@@ -33,9 +58,11 @@ model cartItem{
   userId  Int
   productId Int
   quantity Int
-  status cartItemStatus @default(pending)
+  receiptId Int?
+  status cartItemStatus @default(shopping)
   createAt     String
   updateAt     String
+  FK_receipt_cartItem receipts? @relation(fields: [receiptId],references: [id])
   FK_products_cartItem products @relation(fields: [productId],references: [id])
   FK_user_cartItem users @relation(fields: [userId],references: [id])
 }
@@ -51,6 +78,7 @@ model admins {
   password   String
   status     Boolean      @default(true)
   department Int
+  discordId String?
   createAt   String
   updateAt   String
   ipList     admins_IPs[]
@@ -128,6 +156,7 @@ model material {
 model products {
   id                     Int            @id @default(autoincrement())
   productName            String         @unique
+  namefield  String 
   material               Int
   madeBy                 Int
   categoryId             Int
@@ -168,4 +197,35 @@ model productsPics {
   updateAt               String
   productId              Int
   FK_products_categories products @relation(fields: [productId], references: [id])
+}
+
+model record {
+  id                     Int      @id @default(autoincrement())
+  operatorId Int
+  operator  String?
+  operateAt String
+  operateContent String @db.LongText
+}
+
+enum ChatType  {
+  TEXT
+  IMG
+  VIDEO
+  LINK
+}
+
+model chat {
+  id    Int    @id @default(autoincrement())
+  guestId String
+  adminId String?
+  content String?
+  imgUrl String?
+  videoUrl String?
+  link String?
+  createAt String
+  updateAt String
+  discordTextChannelId String
+  guestName String
+  guestFbUrl String?
+  guestNumberPhone String?
 }

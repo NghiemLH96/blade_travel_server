@@ -77,8 +77,7 @@ export class UsersService {
 
     async uploadAvatar(updateData: { id: string, avatar: string }) {
         try {
-            console.log(typeof updateData.id);
-            await this.prisma.users.update({
+            const data = await this.prisma.users.update({
                 where: {
                     id: Number(updateData.id)
                 },
@@ -87,7 +86,8 @@ export class UsersService {
                 }
             })
             return {
-                message: "updata avatar successed"
+                message: "Chỉnh sửa Avatar thành công",
+                data
             }
         } catch (error) {
             return {
@@ -153,17 +153,18 @@ export class UsersService {
                     email:data.email
                 }
             })
+            
             if (loginUser) {
                 if (loginUser.status == true) {
                     return {
                         data:loginUser
                     }
                 }else{
-                    return {}
+                    return
                 }
             }
         } catch (error) {
-            return {}
+            return
         }
     }
 
@@ -212,6 +213,38 @@ export class UsersService {
             return {
                 error
             }
+        }
+    }
+
+    async updatePassword(passInfo:{userId:number,old:string,new:string}){
+        try {
+            const data = await this.prisma.users.findFirst({
+                where:{
+                    id:passInfo.userId
+                }
+            })
+            if (compareSync(passInfo.old,data.password)) {
+                await this.prisma.users.update({
+                    where:{
+                        id:passInfo.userId
+                    },
+                    data:{
+                        password:hashSync(passInfo.new,5)
+                    }
+                })
+                return {
+                    message:"Thay đổi mật khẩu thành công",
+                    result:true,
+                    data
+                }
+            }else{
+                return {
+                    message:"Mật khẩu cũ không đúng , nếu bạn là tài khoản đăng ký bằng Google mời quý khách liên hệ hỗ trợ để thiết lập lại mật khẩu",
+                    result:false
+                }
+            }
+        } catch (error) {
+            return {error}
         }
     }
 }

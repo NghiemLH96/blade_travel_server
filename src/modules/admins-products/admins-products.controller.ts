@@ -5,6 +5,7 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import searchQueryDto from './dto/search-query.dto';
 import { uploadFileToStorage } from '../firebase/firebase.module';
 import updateProductDto from './dto/update-product.dto';
+import { receiptStatus } from '@prisma/client';
 
 @Controller('admin-products')
 export class AdminsProductsController {
@@ -269,12 +270,15 @@ export class AdminsProductsController {
         picsList.push(picLink)
       }
       const { message , error } = await this.adminsProductsService.createNewBrand(picsList,brandName)
-      return res.status(200).json({
-        message
-      })
+      if (error) {
+        throw error
+      }else{
+        return res.status(200).json({
+          message
+        })
+      }
     } catch (error) {
       console.log(error);
-      
       return res.status(413).json({
         error
       })
@@ -404,6 +408,70 @@ export class AdminsProductsController {
         })
       }
       
+    } catch (error) {
+      return res.status(413).json({
+        error
+      })
+    }
+  }
+
+  @Get('receipts')
+  async getReceipts(@Query() query:{userName:string,status:receiptStatus,current:number,size:number},@Res() res:Response){
+    try {
+      console.log(query);
+      
+      const {message, data , total , error} = await this.adminsProductsService.getReceipts(query)
+      if (error) {
+        throw error
+      } else{
+        return res.status(200).json({
+          message,
+          total,
+          data
+        })
+      }
+    } catch (error) {
+      return res.status(413).json({
+        error
+      })
+    }
+  }
+
+  @Patch('set-BS')
+  async setBestSeller(@Body() body:{id:number,bestSeller:boolean},@Res() res:Response){
+    try {
+      const {message, flag , error} = await this.adminsProductsService.setBestSeller(body)
+      if (error) {
+        throw error
+      }else{
+        if (flag) {
+          return res.status(200).json({
+            message
+          })
+        }else{
+          return res.status(214).json({
+            message
+          })
+        }
+      }
+    } catch (error) {
+      return res.status(413).json({
+        error
+      })
+    }
+  }
+
+  @Patch('cancel-receipt')
+  async cancelReceipt(@Body() body:{receiptId:number},@Res() res:Response){
+    try {
+      const {message,error} = await this.adminsProductsService.cancelReceipt(body.receiptId)
+      if (error) {
+        throw error
+      }else{
+        return res.status(200).json({
+          message
+        })
+      }
     } catch (error) {
       return res.status(413).json({
         error

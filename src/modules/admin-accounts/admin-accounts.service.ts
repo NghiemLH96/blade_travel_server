@@ -14,7 +14,7 @@ export class AdminAccountsService {
                             contains:searchOption.username
                         }},
                         {status:searchOption.status == null ? {} : searchOption.status},
-                        {department:searchOption.department == null ? {} : searchOption.department}
+                        {department:searchOption.department == null ? {not:1} : searchOption.department}
                     ]
                 }
             })
@@ -25,7 +25,7 @@ export class AdminAccountsService {
                             contains:searchOption.username
                         }},
                         {status:searchOption.status == null ? {} : searchOption.status},
-                        {department:searchOption.department == null ? {} : searchOption.department}
+                        {department:searchOption.department == null ? {not:1} : searchOption.department}
                     ]
                 },
                 include:{
@@ -47,6 +47,8 @@ export class AdminAccountsService {
     }
 
     async changeStatus(adminDetail:{id:number,status:boolean}){
+        console.log(adminDetail);
+        
         try {
             const result = await this.prisma.admins.update({
                 where:{
@@ -61,6 +63,8 @@ export class AdminAccountsService {
                 message:'Thay đổi trạng thái thành công'
             }
         } catch (error) {
+            console.log(error);
+            
             return {
                 message:'Thay đổi trạng thái thất bại',
                 error
@@ -92,7 +96,13 @@ export class AdminAccountsService {
 
     async getDepartment(){
         try {
-            const result = await this.prisma.departments.findMany({})
+            const result = await this.prisma.departments.findMany({
+                where:{
+                    NOT:{
+                        id:1
+                    }
+                }
+            })
             return {
                 message:'Lấy dữ liệu thành công',
                 data:result
@@ -109,7 +119,6 @@ export class AdminAccountsService {
                     username:newAdminDetail.username
                 }
             })
-            console.log(checkExist);
             
             if (checkExist) {
                 return {
@@ -117,7 +126,6 @@ export class AdminAccountsService {
                     message:"Tài khoản admin đã tồn tại"
                 }
             }else{
-                console.log(newAdminDetail);
                 
                 const result = await this.prisma.admins.create({
                     data:{

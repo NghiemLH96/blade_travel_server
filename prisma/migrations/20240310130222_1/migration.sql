@@ -17,12 +17,28 @@ CREATE TABLE `users` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
+CREATE TABLE `receipts` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `address` VARCHAR(191) NOT NULL,
+    `userEmail` VARCHAR(191) NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `phone` VARCHAR(191) NOT NULL,
+    `paymentMethod` ENUM('cod', 'wallet') NOT NULL,
+    `status` ENUM('pending', 'success', 'canceled') NOT NULL DEFAULT 'pending',
+    `createAt` VARCHAR(191) NOT NULL,
+    `updateAt` VARCHAR(191) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `cartItem` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` INTEGER NOT NULL,
     `productId` INTEGER NOT NULL,
     `quantity` INTEGER NOT NULL,
-    `status` ENUM('pending', 'paid') NOT NULL DEFAULT 'pending',
+    `receiptId` INTEGER NULL,
+    `status` ENUM('shopping', 'pending', 'paid') NOT NULL DEFAULT 'shopping',
     `createAt` VARCHAR(191) NOT NULL,
     `updateAt` VARCHAR(191) NOT NULL,
 
@@ -36,6 +52,7 @@ CREATE TABLE `admins` (
     `password` VARCHAR(191) NOT NULL,
     `status` BOOLEAN NOT NULL DEFAULT true,
     `department` INTEGER NOT NULL,
+    `discordId` VARCHAR(191) NULL,
     `createAt` VARCHAR(191) NOT NULL,
     `updateAt` VARCHAR(191) NOT NULL,
 
@@ -132,6 +149,7 @@ CREATE TABLE `material` (
 CREATE TABLE `products` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `productName` VARCHAR(191) NOT NULL,
+    `namefield` VARCHAR(191) NOT NULL,
     `material` INTEGER NOT NULL,
     `madeBy` INTEGER NOT NULL,
     `categoryId` INTEGER NOT NULL,
@@ -174,6 +192,39 @@ CREATE TABLE `productsPics` (
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `record` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `operatorId` INTEGER NOT NULL,
+    `operator` VARCHAR(191) NULL,
+    `operateAt` VARCHAR(191) NOT NULL,
+    `operateContent` LONGTEXT NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `chat` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `guestId` VARCHAR(191) NOT NULL,
+    `adminId` VARCHAR(191) NULL,
+    `content` VARCHAR(191) NULL,
+    `imgUrl` VARCHAR(191) NULL,
+    `videoUrl` VARCHAR(191) NULL,
+    `link` VARCHAR(191) NULL,
+    `createAt` VARCHAR(191) NOT NULL,
+    `updateAt` VARCHAR(191) NOT NULL,
+    `discordTextChannelId` VARCHAR(191) NOT NULL,
+    `guestName` VARCHAR(191) NOT NULL,
+    `guestFbUrl` VARCHAR(191) NULL,
+    `guestNumberPhone` VARCHAR(191) NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `cartItem` ADD CONSTRAINT `cartItem_receiptId_fkey` FOREIGN KEY (`receiptId`) REFERENCES `receipts`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `cartItem` ADD CONSTRAINT `cartItem_productId_fkey` FOREIGN KEY (`productId`) REFERENCES `products`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

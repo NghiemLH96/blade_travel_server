@@ -3,36 +3,39 @@ import PrismaService from '../prisma/prisma.service';
 import createProductDto from './dto/create-product.dto';
 import searchQueryDto from './dto/search-query.dto';
 import updateProductDto from './dto/update-product.dto';
+import { receiptStatus } from '@prisma/client';
 
 @Injectable()
 export class AdminsProductsService {
     constructor(private readonly prisma: PrismaService) { }
 
-    async productFilter(query:searchQueryDto) {
+    async productFilter(query: searchQueryDto) {
         try {
             const count = await this.prisma.products.count({
                 where: {
-                    AND:[
-                        {productName: {
-                            contains:query.name
-                        }},
+                    AND: [
                         {
-                            material:query.material == "null" ? {} : Number(query.material)
+                            namefield: {
+                                contains: query.name.toLowerCase()
+                            }
                         },
                         {
-                            status:query.status == "null" ? {} : Boolean(query.status)
+                            material: query.material == "null" ? {} : Number(query.material)
                         },
                         {
-                            madeBy:query.madeby == "null" ? {} : Number(query.madeby)
+                            status: query.status == "null" ? {} : Boolean(query.status)
                         },
                         {
-                            categoryId:query.category == "null" ? {} : Number(query.category)
+                            madeBy: query.madeby == "null" ? {} : Number(query.madeby)
                         },
                         {
-                            brand:query.brand == "null" ? {} : Number(query.brand)
+                            categoryId: query.category == "null" ? {} : Number(query.category)
                         },
                         {
-                            deleted:false
+                            brand: query.brand == "null" ? {} : Number(query.brand)
+                        },
+                        {
+                            deleted: false
                         }
                     ]
                 }
@@ -40,49 +43,51 @@ export class AdminsProductsService {
 
             const result = await this.prisma.products.findMany({
                 where: {
-                    AND:[
-                        {productName: {
-                            contains:query.name
-                        }},
+                    AND: [
                         {
-                            material:query.material == "null" ? {} : Number(query.material)
+                            namefield: {
+                                contains: query.name.toLowerCase()
+                            }
                         },
                         {
-                            status:query.status == "null" ? {} : Boolean(query.status)
+                            material: query.material == "null" ? {} : Number(query.material)
                         },
                         {
-                            madeBy:query.madeby == "null" ? {} : Number(query.madeby)
+                            status: query.status == "null" ? {} : Boolean(query.status)
                         },
                         {
-                            categoryId:query.category == "null" ? {} : Number(query.category)
+                            madeBy: query.madeby == "null" ? {} : Number(query.madeby)
                         },
                         {
-                            brand:query.brand == "null" ? {} : Number(query.brand)
+                            categoryId: query.category == "null" ? {} : Number(query.category)
                         },
                         {
-                            deleted:false
+                            brand: query.brand == "null" ? {} : Number(query.brand)
+                        },
+                        {
+                            deleted: false
                         }
                     ],
-                  },
+                },
                 include: {
                     FK_products_categories: true,
                     FK_products_brands: true,
-                    FK_products_material:true,
-                    FK_products_madeBy:true
+                    FK_products_material: true,
+                    FK_products_madeBy: true
                 },
                 skip: (Number(query.current) - 1) * (Number(query.take)),
-                take:  Number(query.take)
+                take: Number(query.take)
             })
             const data = [...result]
             return {
-                message:"lấy dữ liệu thành công",
+                message: "lấy dữ liệu thành công",
                 data,
                 count
             }
 
         } catch (error) {
-            console.log("error",error);
-            
+            console.log("error", error);
+
             return {
                 message: "Lấy dữ liệu thất bại",
                 error
@@ -90,96 +95,96 @@ export class AdminsProductsService {
         }
     }
 
-    async getBrand(){
+    async getBrand() {
         try {
             const result = await this.prisma.brands.findMany({
-                where:{
-                    deleted:false
+                where: {
+                    deleted: false
                 }
             })
             if (result) {
                 return {
-                    message:'Lấy nhãn hiệu thành công',
-                    data:result
+                    message: 'Lấy nhãn hiệu thành công',
+                    data: result
                 }
             }
         } catch (error) {
-            console.log('brand',error);
-            
-            return {error}
+            console.log('brand', error);
+
+            return { error }
         }
     }
-    
-    async getMadeBy(){
+
+    async getMadeBy() {
         try {
             const result = await this.prisma.madeBy.findMany({
-                where:{
-                    deleted:false
+                where: {
+                    deleted: false
                 }
             })
             if (result) {
                 return {
-                    message:'Lấy nhãn hiệu thành công',
-                    data:result
+                    message: 'Lấy nhãn hiệu thành công',
+                    data: result
                 }
             }
         } catch (error) {
-            console.log('madeby',error);
-            return {error}
+            console.log('madeby', error);
+            return { error }
         }
     }
 
-    async getCategories(){
+    async getCategories() {
         try {
             const result = await this.prisma.categories.findMany({
-                where:{
-                    deleted:false
+                where: {
+                    deleted: false
                 }
             })
             if (result) {
                 return {
-                    message:'Lấy nhãn hiệu thành công',
-                    data:result
+                    message: 'Lấy nhãn hiệu thành công',
+                    data: result
                 }
             }
         } catch (error) {
-            console.log('category',error);
-            return {error}
+            console.log('category', error);
+            return { error }
         }
     }
 
-    async getMaterial(){
+    async getMaterial() {
         try {
             const result = await this.prisma.material.findMany({
-                where:{
-                    deleted:false
+                where: {
+                    deleted: false
                 }
             })
             if (result) {
                 return {
-                    message:'Lấy nhãn hiệu thành công',
-                    data:result
+                    message: 'Lấy nhãn hiệu thành công',
+                    data: result
                 }
             }
         } catch (error) {
-            console.log('material',error);
-            return {error}
+            console.log('material', error);
+            return { error }
         }
     }
 
-    async changeStatus(item:{id:number,status:boolean}){
+    async changeStatus(item: { id: number, status: boolean }) {
         try {
             await this.prisma.products.update({
-                where:{
-                    id:item.id
+                where: {
+                    id: item.id
                 },
-                data:{
-                    status:!item.status,
-                    updateAt:String(Date.now())
+                data: {
+                    status: !item.status,
+                    updateAt: String(Date.now())
                 }
             })
             return {
-                message:"Thay đổi trạng thái thành công"
+                message: "Thay đổi trạng thái thành công"
             }
         } catch (error) {
             return {
@@ -188,17 +193,67 @@ export class AdminsProductsService {
         }
     }
 
+    async setBestSeller(item: { id: number, bestSeller: boolean }) {
+        try {
+            if (!item.bestSeller) {
+                const result = await this.prisma.products.findMany({
+                    where: {
+                        bestSeller: true
+                    }
+                })
+                if (result.length >= 4) {
+                    return {
+                        flag: false,
+                        message: "Mỗi lần chỉ được hiển thị nhiều nhất 4 sản phẩm bestSeller"
+                    }
+                } else {
+                    await this.prisma.products.update({
+                        where: {
+                            id: item.id
+                        },
+                        data: {
+                            bestSeller: !item.bestSeller,
+                            updateAt:String(Date.now())
+                        }
+                    })
+                    return {
+                        flag: true,
+                        message: "Bật BS thành công"
+                    }
+                }
+            } else {
+                await this.prisma.products.update({
+                    where: {
+                        id: item.id
+                    },
+                    data: {
+                        bestSeller: !item.bestSeller,
+                        updateAt:String(Date.now())
+                    }
+                })
+                return {
+                    flag: true,
+                    message: "Tắt BS thành công"
+                }
+            }
+
+        } catch (error) {
+            return { error }
+        }
+    }
+
     async createNewProduct(newProductDetail: createProductDto) {
         try {
             let createResult = await this.prisma.products.create({
                 data: {
-                    productName:newProductDetail.productName,
-                    material:newProductDetail.material,
-                    madeBy:newProductDetail.madeBy,
-                    categoryId:newProductDetail.categoryId,
-                    price:Number(newProductDetail.price),
-                    brand:newProductDetail.brand,
-                    avatar:newProductDetail.avatar,
+                    productName: newProductDetail.productName,
+                    namefield:newProductDetail.productName.toLowerCase(),
+                    material: newProductDetail.material,
+                    madeBy: newProductDetail.madeBy,
+                    categoryId: newProductDetail.categoryId,
+                    price: Number(newProductDetail.price),
+                    brand: newProductDetail.brand,
+                    avatar: newProductDetail.avatar,
                     createAt: String(Date.now()),
                     updateAt: String(Date.now())
                 }
@@ -208,69 +263,70 @@ export class AdminsProductsService {
                 data: createResult
             }
         } catch (error) {
-            console.log("tạo sản phẩm" , error);
+            console.log("tạo sản phẩm", error);
             return { error }
         }
     }
 
-    async updateDetail(productDetail:updateProductDto){
+    async updateDetail(productDetail: updateProductDto) {
         try {
             await this.prisma.products.update({
-                where:{
-                    id:productDetail.id
+                where: {
+                    id: productDetail.id
                 },
-                data:{
-                    productName:productDetail.productName,
-                    material:productDetail.material,
-                    madeBy:productDetail.madeBy,
-                    categoryId:productDetail.categoryId,
-                    price:Number(productDetail.price),
-                    brand:productDetail.brand
+                data: {
+                    productName: productDetail.productName,
+                    material: productDetail.material,
+                    madeBy: productDetail.madeBy,
+                    categoryId: productDetail.categoryId,
+                    price: Number(productDetail.price),
+                    brand: productDetail.brand,
+                    updateAt:String(Date.now())
                 }
             })
             return {
-                message:"Chỉnh sửa thông tin sản phẩm thành công"
+                message: "Chỉnh sửa thông tin sản phẩm thành công"
             }
         } catch (error) {
-            return {error}
+            return { error }
         }
     }
 
-    async uploadImgs(uploadDataList:any,productId:number) {
+    async uploadImgs(uploadDataList: any, productId: number) {
         try {
 
             await this.prisma.productsPics.deleteMany({
-                where:{
+                where: {
                     productId
                 }
             })
 
             await this.prisma.productsPics.createMany({
-                data:uploadDataList
+                data: uploadDataList
             })
-           
+
             return {
-                message:"Đăng tải hình ảnh thành công"
+                message: "Đăng tải hình ảnh thành công"
             }
-           
+
         } catch (error) {
             return { error }
         }
     }
 
-
-    async deleteProduct(id:number){
+    async deleteProduct(id: number) {
         try {
             const result = await this.prisma.products.update({
-                where:{
+                where: {
                     id
                 },
-                data:{
-                    deleted:true
+                data: {
+                    deleted: true,
+                    updateAt:String(Date.now())
                 }
             })
             return {
-                message:"Xoá sản phẩm thành công"
+                message: "Xoá sản phẩm thành công"
             }
         } catch (error) {
             return {
@@ -279,19 +335,19 @@ export class AdminsProductsService {
         }
     }
 
-    async changeMaterialStatus(item:{id:number,status:boolean}){
+    async changeMaterialStatus(item: { id: number, status: boolean }) {
         try {
             await this.prisma.material.update({
-                where:{
-                    id:item.id
+                where: {
+                    id: item.id
                 },
-                data:{
-                    status:!item.status,
-                    updateAt:String(Date.now())
+                data: {
+                    status: !item.status,
+                    updateAt: String(Date.now())
                 }
             })
             return {
-                message:"Thay đổi trạng thái thành công"
+                message: "Thay đổi trạng thái thành công"
             }
         } catch (error) {
             return {
@@ -300,49 +356,50 @@ export class AdminsProductsService {
         }
     }
 
-    async createNewMaterial(newMaterialName:string){
+    async createNewMaterial(newMaterialName: string) {
         try {
             await this.prisma.material.create({
-                data:{
-                    material:newMaterialName,
-                    createAt:String(Date.now()),
-                    updateAt:String(Date.now())
+                data: {
+                    material: newMaterialName,
+                    createAt: String(Date.now()),
+                    updateAt: String(Date.now())
                 }
             })
             return {
-                message:"Khởi tạo chất liệu thành công"
+                message: "Khởi tạo chất liệu thành công"
             }
         } catch (error) {
-            return {error}
+            return { error }
         }
     }
-    
-    async deleteMaterial(id:number){
+
+    async deleteMaterial(id: number) {
         try {
             const checkProductExist = await this.prisma.products.findMany({
-                where:{
-                    material:id,
-                    deleted:false
+                where: {
+                    material: id,
+                    deleted: false
                 }
             })
-            
+
             if (checkProductExist.length != 0) {
                 return {
-                    success:false,
-                    message:`Xoá thất bại chất liệu này vẫn còn ${checkProductExist.length} sản phẩm hiện hành , bạn nên xoá sản phẩm trước khi xoá chất liệu`
+                    success: false,
+                    message: `Xoá thất bại chất liệu này vẫn còn ${checkProductExist.length} sản phẩm hiện hành , bạn nên xoá sản phẩm trước khi xoá chất liệu`
                 }
-            }else{
+            } else {
                 await this.prisma.material.update({
-                    where:{
+                    where: {
                         id
                     },
-                    data:{
-                        deleted:true
+                    data: {
+                        deleted: true,
+                        updateAt:String(Date.now())
                     }
                 })
                 return {
-                    success:true,
-                    message:"Xoá dữ liệu thành công"
+                    success: true,
+                    message: "Xoá dữ liệu thành công"
                 }
             }
         } catch (error) {
@@ -352,19 +409,19 @@ export class AdminsProductsService {
         }
     }
 
-    async changeBrandStatus(item:{id:number,status:boolean}){
+    async changeBrandStatus(item: { id: number, status: boolean }) {
         try {
             await this.prisma.brands.update({
-                where:{
-                    id:item.id
+                where: {
+                    id: item.id
                 },
-                data:{
-                    status:!item.status,
-                    updateAt:String(Date.now())
+                data: {
+                    status: !item.status,
+                    updateAt: String(Date.now())
                 }
             })
             return {
-                message:"Thay đổi trạng thái thành công"
+                message: "Thay đổi trạng thái thành công"
             }
         } catch (error) {
             return {
@@ -373,51 +430,52 @@ export class AdminsProductsService {
         }
     }
 
-    async createNewBrand(picsList:Array<string>,brandName:string){
+    async createNewBrand(picsList: Array<string>, brandName: string) {
         try {
             await this.prisma.brands.create({
-                data:{
-                    brandLogo:picsList[0],
-                    brandChoicePic:picsList[1],
+                data: {
+                    brandLogo: picsList[0],
+                    brandChoicePic: picsList[1],
                     brandName,
-                    createAt:String(Date.now()),
-                    updateAt:String(Date.now())
+                    createAt: String(Date.now()),
+                    updateAt: String(Date.now())
                 }
             })
             return {
-                message:"Khởi tạo nhãn hiệu thành công"
+                message: "Khởi tạo nhãn hiệu thành công"
             }
         } catch (error) {
-            return {error}
+            return { error }
         }
     }
 
-    async deleteBrand(id:number){
+    async deleteBrand(id: number) {
         try {
             const checkProductExist = await this.prisma.products.findMany({
-                where:{
-                    brand:id,
-                    deleted:false
+                where: {
+                    brand: id,
+                    deleted: false
                 }
             })
-            
+
             if (checkProductExist.length != 0) {
                 return {
-                    success:false,
-                    message:`Xoá thất bại hiện nhãn hiệu này vẫn còn ${checkProductExist.length} sản phẩm hiện hành , bạn nên xoá sản phẩm trước khi xoá nhãn hiệu`
+                    success: false,
+                    message: `Xoá thất bại hiện nhãn hiệu này vẫn còn ${checkProductExist.length} sản phẩm hiện hành , bạn nên xoá sản phẩm trước khi xoá nhãn hiệu`
                 }
-            }else{
+            } else {
                 await this.prisma.brands.update({
-                    where:{
+                    where: {
                         id
                     },
-                    data:{
-                        deleted:true
+                    data: {
+                        deleted: true,
+                        updateAt:String(Date.now())
                     }
                 })
                 return {
-                    success:true,
-                    message:"Xoá dữ liệu thành công"
+                    success: true,
+                    message: "Xoá dữ liệu thành công"
                 }
             }
         } catch (error) {
@@ -427,19 +485,19 @@ export class AdminsProductsService {
         }
     }
 
-    async changeCategoryStatus(item:{id:number,status:boolean}){
+    async changeCategoryStatus(item: { id: number, status: boolean }) {
         try {
             await this.prisma.categories.update({
-                where:{
-                    id:item.id
+                where: {
+                    id: item.id
                 },
-                data:{
-                    status:!item.status,
-                    updateAt:String(Date.now())
+                data: {
+                    status: !item.status,
+                    updateAt: String(Date.now())
                 }
             })
             return {
-                message:"Thay đổi trạng thái thành công"
+                message: "Thay đổi trạng thái thành công"
             }
         } catch (error) {
             return {
@@ -448,50 +506,51 @@ export class AdminsProductsService {
         }
     }
 
-    async createNewCategory(fireBaseFileName:string,newCategoryName:string){
+    async createNewCategory(fireBaseFileName: string, newCategoryName: string) {
         try {
             await this.prisma.categories.create({
-                data:{
-                    categoryName:newCategoryName,
-                    createAt:String(Date.now()),
-                    updateAt:String(Date.now()),
-                    avatar:fireBaseFileName
+                data: {
+                    categoryName: newCategoryName,
+                    createAt: String(Date.now()),
+                    updateAt: String(Date.now()),
+                    avatar: fireBaseFileName
                 }
             })
             return {
-                message:"Khởi tạo thể loại thành công"
+                message: "Khởi tạo thể loại thành công"
             }
         } catch (error) {
-            return {error}
+            return { error }
         }
     }
 
-    async deleteCategory(id:number){
+    async deleteCategory(id: number) {
         try {
             const checkProductExist = await this.prisma.products.findMany({
-                where:{
-                    categoryId:id,
-                    deleted:false
+                where: {
+                    categoryId: id,
+                    deleted: false
                 }
             })
-            
+
             if (checkProductExist.length != 0) {
                 return {
-                    success:false,
-                    message:`Xoá thất bại thể loại này vẫn còn ${checkProductExist.length} sản phẩm hiện hành , bạn nên xoá sản phẩm trước khi xoá thể loại`
+                    success: false,
+                    message: `Xoá thất bại thể loại này vẫn còn ${checkProductExist.length} sản phẩm hiện hành , bạn nên xoá sản phẩm trước khi xoá thể loại`
                 }
-            }else{
+            } else {
                 await this.prisma.categories.update({
-                    where:{
+                    where: {
                         id
                     },
-                    data:{
-                        deleted:true
+                    data: {
+                        deleted: true,
+                        updateAt:String(Date.now())
                     }
                 })
                 return {
-                    success:true,
-                    message:"Xoá dữ liệu thành công"
+                    success: true,
+                    message: "Xoá dữ liệu thành công"
                 }
             }
         } catch (error) {
@@ -501,19 +560,19 @@ export class AdminsProductsService {
         }
     }
 
-    async changeMadeByStatus(item:{id:number,status:boolean}){
+    async changeMadeByStatus(item: { id: number, status: boolean }) {
         try {
             await this.prisma.madeBy.update({
-                where:{
-                    id:item.id
+                where: {
+                    id: item.id
                 },
-                data:{
-                    status:!item.status,
-                    updateAt:String(Date.now())
+                data: {
+                    status: !item.status,
+                    updateAt: String(Date.now())
                 }
             })
             return {
-                message:"Thay đổi trạng thái thành công"
+                message: "Thay đổi trạng thái thành công"
             }
         } catch (error) {
             return {
@@ -522,50 +581,124 @@ export class AdminsProductsService {
         }
     }
 
-    async createNewMadeBy(newCountry:string){
+    async createNewMadeBy(newCountry: string) {
         try {
             await this.prisma.madeBy.create({
+                data: {
+                    country: newCountry,
+                    createAt: String(Date.now()),
+                    updateAt: String(Date.now())
+                }
+            })
+            return {
+                message: "Khởi tạo thể loại thành công"
+            }
+        } catch (error) {
+            return { error }
+        }
+    }
+
+    async deleteMadeBy(id: number) {
+        try {
+            const checkProductExist = await this.prisma.products.findMany({
+                where: {
+                    madeBy: id,
+                    deleted: false
+                }
+            })
+
+            if (checkProductExist.length != 0) {
+                return {
+                    success: false,
+                    message: `Xoá thất bại xuất xứ này vẫn còn ${checkProductExist.length} sản phẩm hiện hành , bạn nên xoá sản phẩm trước khi xoá xuất xứ`
+                }
+            } else {
+                await this.prisma.madeBy.update({
+                    where: {
+                        id
+                    },
+                    data: {
+                        deleted: true,
+                        updateAt:String(Date.now())
+                    }
+                })
+                return {
+                    success: true,
+                    message: "Xoá dữ liệu thành công"
+                }
+            }
+        } catch (error) {
+            return {
+                error
+            }
+        }
+    }
+
+    async getReceipts(query:{userName:string,status:receiptStatus,current:number,size:number}) {
+        try {
+            const count = await this.prisma.receipts.count({
+                where:{
+                    AND:[
+                        {userEmail:{
+                            contains:query.userName
+                        }},
+                        {
+                            status:query.status ? query.status : {}
+                        }
+                    ]
+                }
+            })
+
+            const result = await this.prisma.receipts.findMany({
+                where:{
+                    AND:[
+                        {userEmail:{
+                            contains:query.userName
+                        }},
+                        {
+                            status:query.status ? query.status : {}
+                        }
+                    ]
+                },
+                include: {
+                    items: {
+                      include: {
+                        FK_receipt_cartItem: true,
+                        FK_products_cartItem:true,
+                        FK_user_cartItem:true
+                      }
+                    }
+                  },
+                  skip:(Number(query.current)-1)*Number(query.size),
+                  take:Number(query.size)
+            })
+            
+            return {
+                message: "Lấy dữ liệu thành công",
+                total:count,
+                data: result
+            }
+        } catch (error) {
+            return {
+                error
+            }
+        }
+    }
+
+    async cancelReceipt(receiptId:number){
+        try {
+            const result = await this.prisma.receipts.update({
+                where:{
+                    id:receiptId,
+                    status:'pending'
+                },
                 data:{
-                    country:newCountry,
-                    createAt:String(Date.now()),
+                    status:'canceled',
                     updateAt:String(Date.now())
                 }
             })
             return {
-                message:"Khởi tạo thể loại thành công"
-            }
-        } catch (error) {
-            return {error}
-        }
-    }
-
-    async deleteMadeBy(id:number){
-        try {
-            const checkProductExist = await this.prisma.products.findMany({
-                where:{
-                    madeBy:id,
-                    deleted:false
-                }
-            })
-            
-            if (checkProductExist.length != 0) {
-                return {
-                    success:false,
-                    message:`Xoá thất bại xuất xứ này vẫn còn ${checkProductExist.length} sản phẩm hiện hành , bạn nên xoá sản phẩm trước khi xoá xuất xứ`
-                }
-            }else{
-                await this.prisma.madeBy.update({
-                    where:{
-                        id
-                    },
-                    data:{
-                        deleted:true
-                    }
-                })
-                return {
-                    success:true,
-                    message:"Xoá dữ liệu thành công"
-                }
+                message:'Huỷ đơn thành công'
             }
         } catch (error) {
             return {

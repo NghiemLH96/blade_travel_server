@@ -41,7 +41,7 @@ export class AdminsService {
 
   async checkLogin(tokenDetail: loginAdminDto) {
     try {
-      const result = this.prisma.admins.findFirst({
+      const result = await this.prisma.admins.findFirst({
         where: {
           AND: [{
             username: tokenDetail.username
@@ -51,13 +51,70 @@ export class AdminsService {
           }]
         }
       })
-      if (result) {
-        return true
+      if (result) { 
+        return {
+          result:true,
+          data:result
+        }
       } else {
-        throw false
+        return {
+          result:false,
+        }
       }
     } catch (error) {
-      return false
+      return {
+        result:false,
+        error
+      }
+    }
+  }
+
+  async record(info:{id:number,content:string,operator:string}){
+    try {
+      await this.prisma.record.create({
+        data:{
+          operatorId:info.id,
+          operator:info.operator,
+          operateAt:String(Date.now()),
+          operateContent:info.content
+        }
+      })
+      return {
+        message:'Tạo ghi nhớ thành công'
+      }
+    } catch (error) {
+      return {
+        error
+      }
+    }
+  }
+
+  async getRecord(query:{operator:string,current:number,size:number}){
+    try {
+      const count = await this.prisma.record.count({
+        where:{
+          operator:{
+            contains:query.operator
+          }
+        }
+      })
+
+      const result = await this.prisma.record.findMany({
+        where:{
+          operator:{
+            contains:query.operator
+          }
+        },
+        skip:(Number(query.current)-1)*Number(query.size),
+        take:Number(query.size)
+      })
+      return {
+        message:"Lấy dữ liệu thành công",
+        total:count,
+        data:result
+      }
+    } catch (error) {
+      return {error}
     }
   }
 }

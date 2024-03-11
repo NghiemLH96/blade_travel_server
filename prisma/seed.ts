@@ -375,6 +375,7 @@ async function main() {
             data: [
                 {
                     productName: "Xe leo núi 1",
+                    namefield:"xe leo núi 1",
                     material: 1,
                     madeBy: 1,
                     categoryId: 1,
@@ -388,6 +389,7 @@ async function main() {
                 },
                 {
                     productName: "Xe leo núi 2",
+                    namefield:"xe leo núi 2",
                     material: 1,
                     madeBy: 1,
                     categoryId: 1,
@@ -402,6 +404,7 @@ async function main() {
                 ,
                 {
                     productName: "Xe leo núi 3",
+                    namefield:"xe leo núi 3",
                     material: 1,
                     madeBy: 1,
                     categoryId: 1,
@@ -414,6 +417,7 @@ async function main() {
                 },
                 {
                     productName: "Xe gia đình 1",
+                    namefield:"xe gia đình 1",
                     material: 1,
                     madeBy: 1,
                     categoryId: 2,
@@ -427,6 +431,7 @@ async function main() {
                 },
                 {
                     productName: "Xe gia đình 2",
+                    namefield:"xe gia đình 2",
                     material: 1,
                     madeBy: 3,
                     categoryId: 2,
@@ -439,6 +444,7 @@ async function main() {
                 },
                 {
                     productName: "Xe gia đình 3",
+                    namefield:"xe gia đình 3",
                     material: 1,
                     madeBy: 3,
                     categoryId: 2,
@@ -450,6 +456,7 @@ async function main() {
                 },
                 {
                     productName: "Xe người lớn 1",
+                    namefield:"xe người lớn 1",
                     material: 2,
                     madeBy: 6,
                     categoryId: 3,
@@ -462,6 +469,7 @@ async function main() {
                 },
                 {
                     productName: "Xe người lớn 2",
+                    namefield:"xe người lớn 2",
                     material: 3,
                     madeBy: 6,
                     categoryId: 3,
@@ -473,6 +481,7 @@ async function main() {
                 },
                 {
                     productName: "Xe người lớn 3",
+                    namefield:"xe người lớn 3",
                     material: 2,
                     madeBy: 6,
                     categoryId: 3,
@@ -484,6 +493,7 @@ async function main() {
                 },
                 {
                     productName: "Xe trẻ em 1",
+                    namefield:"xe trẻ em 1",
                     material: 2,
                     madeBy: 6,
                     categoryId: 4,
@@ -495,6 +505,7 @@ async function main() {
                 },
                 {
                     productName: "Xe trẻ em 2",
+                    namefield:"xe trẻ em 2",
                     material: 1,
                     madeBy: 3,
                     categoryId: 4,
@@ -506,6 +517,7 @@ async function main() {
                 },
                 {
                     productName: "Xe trẻ em 3",
+                    namefield:"xe trẻ em 3",
                     material: 1,
                     madeBy: 2,
                     categoryId: 4,

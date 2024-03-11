@@ -25,6 +25,46 @@ export class ProductsController {
     }
   }
 
+  @Get('brand')
+  async getProductByBrand(@Query() query:{brandId:string},@Res() res:Response){
+    console.log(query);
+    try {
+      const {message , data , error } = await this.productsService.getProductByBrand(Number(query.brandId))
+      if (error) {
+        throw error
+      }else{
+        return res.status(200).json({
+          message,
+          data
+        })
+      }
+    } catch (error) {
+      return res.status(200).json({
+        error
+      })
+    }
+  }
+
+  @Get('brand-detail')
+  async getBrandDetail(@Query() query:{brandId:string},@Res() res:Response){
+    console.log(query);
+    try {
+      const {message , data , error } = await this.productsService.getBrandDetail(Number(query.brandId))
+      if (error) {
+        throw error
+      }else{
+        return res.status(200).json({
+          message,
+          data
+        })
+      }
+    } catch (error) {
+      return res.status(200).json({
+        error
+      })
+    }
+  }
+
   @Get()
   async searchByOption(@Res() res:Response,@Query() query:searchQueryDto){
     try {
@@ -126,6 +166,51 @@ export class ProductsController {
         return res.status(200).json({
           message
         })
+      }
+    } catch (error) {
+      return res.status(413).json({
+        error
+      })
+    }
+  }
+
+  @Post('check-out-cod')
+  async checkOutCOD(@Body() body:{id:number,phone:string,address:string,email:string},@Res() res:Response){
+    try {
+      const {message , error} = await this.productsService.checkOutCOD(body)
+      if (error) {
+        throw error
+      }else{
+        return res.status(200).json({
+          message
+        })
+      }
+    } catch (error) {
+      console.log(error);
+      
+      return res.status(413).json({
+        error
+      })
+    }
+  }
+
+  @Post('check-out-wallet')
+  async checkOutWallet(@Body() body:{id:number,phone:string,address:string,email:string},@Res() res:Response){
+    try {
+      const {message, paid ,user , error} = await this.productsService.checkOutWallet(body)
+      if (error) {
+        throw error
+      }else{
+        if (paid) {
+          return res.status(200).json({
+            user,
+            message
+          })
+        }else{
+          return res.status(214).json({
+            message
+          })
+        }
       }
     } catch (error) {
       return res.status(413).json({

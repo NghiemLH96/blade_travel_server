@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res, Patch } from '@nestjs/common';
+import { Controller, Post, Body, Res, Patch, Get, Query } from '@nestjs/common';
 import { AdminsService } from './admins.service';
 import { loginAdminDto } from './dto/login-admin.dto';
 import { Response } from 'express';
@@ -23,6 +23,7 @@ export class AdminsController {
         } else {
           return res.status(200).json({
             message,
+            data,
             token: this.tokenSrc.createToken(data, "1d")
           })
         }
@@ -36,26 +37,69 @@ export class AdminsController {
 
   @Post('check-login')
   async checkLogin(@Body() body: { token: string }, @Res() res: Response) {
-    const loginDetail = await this.tokenSrc.verify(body.token)
-    if (loginDetail == false) {
-      return res.status(215).json({
-        message:"Phiên đăng nhập đã quá thời hạn",
-        result: false
-      })
-    }
+    const loginDetail = this.tokenSrc.verify(body.token)
     try {
-      const result: Boolean = await this.adminsService.checkLogin(loginDetail)
-      if (result) {
-        return res.status(200).json({
-          message:"Tài khoản đã đang nhập!",
-          result: true
-        })
-      } else {
-        throw result
+      const {result , data , error} = await this.adminsService.checkLogin(loginDetail)
+      if (!error) {
+        if (result) {
+          return res.status(200).json({
+            message:"Tài khoản đã đang nhập!",
+            result,
+            data
+          })
+        } else {
+          return res.status(213).json({
+            result: false
+          })
+        }
+      }else{
+        throw error
       }
     } catch (error) {
       return res.status(214).json({
         result: false
+      })
+    }
+  }
+
+  @Post('record')
+  async record(@Body() body:{id:number,content:string,operator:string},@Res() res:Response){
+    try {
+      const {message,error} = await this.adminsService.record(body)
+      if (error) {
+        throw error
+      }else{
+        return res.status(200).json({
+          message
+        })
+      }
+    } catch (error) {
+      console.log(error);
+      
+      return res.status(413).json({
+        error
+      })
+    }
+  }
+  
+  @Get('record')
+  async getRecord(@Query() query:{operator:string,current:number,size:number},@Res() res: Response){
+    try {
+      console.log(query);
+      
+      const {message , data ,total , error} = await this.adminsService.getRecord(query)
+      if (error) {
+        throw error
+      }else{
+        return res.status(200).json({
+          message,
+          total,
+          data
+        })
+      }
+    } catch (error) {
+      return res.status(413).json({
+        error
       })
     }
   }

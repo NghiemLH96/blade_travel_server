@@ -1,4 +1,4 @@
-import { Body, Controller, Ip, Post, Get, Req, Res, UploadedFile, UseInterceptors, Param } from '@nestjs/common';
+import { Body, Controller, Ip, Post, Get, Req, Res, UploadedFile, UseInterceptors, Param, Patch } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Request, Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -18,19 +18,25 @@ export class UsersController {
   @UseInterceptors(FileInterceptor('avatar'))
   async uploadFile(@Body() body: any, @UploadedFile() file: Express.Multer.File, @Res() res: Response) {
     try {
-      let fileName = `avatar_${body.userId}.${file.mimetype.split("/")[1]}`
-      writeFileSync(`public/imgs/avatars/` + fileName, file.buffer)
+      const fileName = await uploadFileToStorage(file,"user-avatar",file.buffer)
+      const userId = JSON.parse(body.id)
       let updateData = {
-        id: body.userId,
+        id: userId,
         avatar: fileName
       }
-      let { message, error } = await this.usersService.uploadAvatar(updateData)
-      return res.status(200).json({
-        message: "upload-avatar successed"
-      })
+      let { message,data, error } = await this.usersService.uploadAvatar(updateData)
+      if (error) {
+        throw error
+      }else{
+        return res.status(200).json({
+          message,
+          data,
+          token:this.tokenServ.createToken(data,"1d")
+        })
+      }
     } catch (error) {
-      return res.status(200).json({
-        message: "upload-avatar failed",
+      return res.status(413).json({
+        message: "Chỉnh sửa Avatar thất bại",
         error
       })
     }
@@ -149,6 +155,7 @@ export class UsersController {
         res.status(413)
       }
       let {data} = await this.usersService.checkLoginFn(loginUser)
+      
       if (data) {
         return res.status(200).json({
           data
@@ -172,6 +179,27 @@ export class UsersController {
         return res.status(200).json({
           message,
           token:this.tokenServ.createToken(info,"1d")
+        })
+      }else{
+        return res.status(214).json({
+          message
+        })
+      }
+    } catch (error) {
+      return res.status(413).json({
+        error
+      })
+    }
+  }
+
+  @Patch('update-password')
+  async updatePassword(@Body() body:{userId:number,old:string,new:string}, @Res() res:Response){
+    try {
+      const {message , result , data , error} = await this.usersService.updatePassword(body)
+      if (result) {
+        return res.status(200).json({
+          message,
+          data
         })
       }else{
         return res.status(214).json({

@@ -9,11 +9,10 @@ export class tokenService {
     }
     verify = (token:string):any => {
         try {
-            let userDetail = verify(token , process.env.PRIVATE_KEY)  
+            let userDetail = verify(token , process.env.PRIVATE_KEY)
+             
             return userDetail
         } catch (error) {
-            console.log(error);
-            
             return false
         }
     }
