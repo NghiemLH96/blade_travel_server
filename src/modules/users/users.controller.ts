@@ -45,7 +45,7 @@ export class UsersController {
   //Register 2nd step
   @Post()
   @UseInterceptors(FileInterceptor('avatar'))
-  async createNewUser(@UploadedFile() file: Express.Multer.File, @Req() req: Request, @Ip() ip: string, @Body() body: any, @Res() res: Response) {
+  async createNewUser(@UploadedFile() file: Express.Multer.File, @Body() body: any, @Res() res: Response) {
     try {
       let newUserDetail = JSON.parse(body.data)
       const fileName = await uploadFileToStorage(file,"user-avatar",file.buffer)
@@ -215,7 +215,7 @@ export class UsersController {
 
   @Post('top-up')
   async topUp(@Body() body:any){
-    console.log(body);
+    console.log("body",body);
     
   }
 }
